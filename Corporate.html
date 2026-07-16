@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate Shoots & Podcasts | Peeyush Howladar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 🎨 GLOBAL DESIGN SYSTEM */
+        :root {
+            --bg-main: #0D0D0D;
+            --text-main: #FFFFFF;
+            --gold: #D4AF37;
+            --silver: #C0C0C0;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-glow: rgba(212, 175, 55, 0.05);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            --border-radius: 24px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; line-height: 1.6; }
+        
+        .ambient-light { position: fixed; top: 10%; right: 20%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(0,0,0,0) 60%); border-radius: 50%; z-index: -1; filter: blur(80px); }
+        .glass-panel { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius); box-shadow: var(--glass-shadow), inset 0 0 20px var(--glass-glow); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+
+        /* NAVBAR */
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(13, 13, 13, 0.5); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); }
+        .nav-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-weight: 700; letter-spacing: 2px; }
+        .back-link { color: var(--silver); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; transition: color 0.3s; }
+        .back-link:hover { color: var(--gold); }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 150px 5% 50px; min-height: 80vh; }
+        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-header h1 { font-size: 4rem; font-weight: 700; letter-spacing: -1px; }
+        .text-gold { color: var(--gold); text-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+
+        /* 🗂️ TAB SYSTEM STYLES */
+        .tab-menu { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
+        
+        .tab-btn { background: var(--glass-bg); color: var(--silver); border: 1px solid var(--glass-border); padding: 12px 30px; border-radius: 50px; font-size: 1rem; font-weight: 500; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s ease; backdrop-filter: blur(10px); }
+        .tab-btn:hover { background: rgba(255, 255, 255, 0.1); color: var(--text-main); }
+        .tab-btn.active { background: rgba(212, 175, 55, 0.1); border-color: var(--gold); color: var(--gold); box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
+
+        .tab-content { display: none; animation: fadeIn 0.5s ease; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 🏢 COMPANY PARTITION STYLES (Slimmer Version) */
+        .company-partition {
+            display: flex; justify-content: space-between; align-items: center; width: 100%;
+            padding: 12px 30px; /* Reduced padding for a slimmer look */
+            background: rgba(212, 175, 55, 0.05); backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px;
+            margin: 50px 0 25px 0; text-decoration: none; color: var(--text-main);
+            transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .company-partition:first-child { margin-top: 10px; }
+        .company-partition:hover { background: rgba(212, 175, 55, 0.15); box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2); transform: translateY(-3px); border-color: var(--gold); }
+        .company-partition h2 { font-size: 1.5rem; /* Smaller font size for slim profile */ font-weight: 600; color: var(--gold); margin: 0; letter-spacing: 1px; }
+        .company-partition span { font-size: 0.8rem; color: var(--silver); text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; transition: color 0.3s; }
+        .company-partition:hover span { color: var(--text-main); }
+
+        /* 🎬 VIDEO GRID & TILES */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        
+        .video-tile { position: relative; aspect-ratio: 16 / 9; overflow: hidden; display: block; text-decoration: none; border-radius: 16px; border: 1px solid var(--glass-border); }
+        .video-thumb { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6) contrast(1.1); transition: transform 0.6s ease, filter 0.3s ease; }
+        .video-tile:hover .video-thumb { transform: scale(1.05); filter: brightness(0.9) contrast(1.1); }
+        
+        .play-icon-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8); width: 60px; height: 60px; background: rgba(212, 175, 55, 0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transition: all 0.3s ease; }
+        .play-icon-overlay svg { width: 24px; height: 24px; fill: var(--bg-main); margin-left: 4px; }
+        .video-tile:hover .play-icon-overlay { opacity: 1; transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 30px rgba(212, 175, 55, 0.6); }
+
+        .video-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: var(--text-main); }
+        .video-info h3 { font-size: 1.1rem; font-weight: 500; margin-bottom: 5px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+        .video-info p { font-size: 0.75rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; }
+
+        footer { padding: 40px; margin: 40px 5%; text-align: center; }
+        .copyright-text { color: var(--silver); font-size: 0.9rem; font-weight: 300; }
+
+        @media (max-width: 768px) {
+            .company-partition { flex-direction: column; text-align: center; gap: 10px; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-light"></div>
+
+    <nav>
+        <div class="nav-logo">PH</div>
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Corporate <span class="text-gold">Work</span></h1>
+            <p style="color: var(--silver); margin-top: 10px; font-size: 1.1rem;">Select a category to explore.</p>
+        </div>
+
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="openTab('podcasts')">Shoots / Podcasts</button>
+            <button class="tab-btn" onclick="openTab('editing')">Editing</button>
+            <button class="tab-btn" onclick="openTab('reels')">Reels</button>
+        </div>
+
+        <!-- ==============================
+             SHOOTS / PODCASTS TAB CONTENT 
+             ============================== -->
+        <div id="podcasts" class="tab-content active">
+
+            <!-- 🟩 INFLUENCER ACT PARTITION -->
+            <a href="https://www.influenceract.com/" target="_blank" class="company-partition">
+                <h2>Influencer Act</h2>
+                <span>Visit Company Page →</span>
+            </a>
+
+            <div class="video-grid">
+                
+                <!-- 1: Why Bangalore is NO LONGER India’s #1 Startup Hub! -->
+                <a href="https://youtu.be/OsTTLDw_YFA" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/OsTTLDw_YFA/maxresdefault.jpg" class="video-thumb" alt="Bangalore Startup Hub">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Why Bangalore is NO LONGER India’s #1 Startup Hub!</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+                <!-- after 1: Women’s Day surprise -->
+                <a href="https://youtu.be/wcbOcK0-W3A" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/wcbOcK0-W3A/maxresdefault.jpg" class="video-thumb" alt="Women’s Day surprise">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>International Women’s Day Surprise</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+                <!-- after after 1: 10 Years of Excellence -->
+                <a href="https://youtu.be/cuejefrsJTM" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/cuejefrsJTM/maxresdefault.jpg" class="video-thumb" alt="10 Years of Excellence">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>10 Years of Excellence | InfluencerAct</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+                <!-- after after after 1: Maa Se Door -->
+                <a href="https://youtu.be/stwhAgIZ4-c" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/stwhAgIZ4-c/maxresdefault.jpg" class="video-thumb" alt="Maa Se Door">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Maa Se Door, Par Maa Ki Yaadon Ke Saath ❤️</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+                <!-- 2: The Untold Story of Ashwatthama -->
+                <a href="https://youtu.be/zzUmbt7ijXw" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/zzUmbt7ijXw/maxresdefault.jpg" class="video-thumb" alt="The Untold Story of Ashwatthama">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>The Untold Story of Ashwatthama</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+                <!-- 3: Parle-G Success Story -->
+                <a href="https://youtu.be/rmllfuUxEtI" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/rmllfuUxEtI/maxresdefault.jpg" class="video-thumb" alt="Parle-G Success Story">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>₹5 se ₹8000 Crore tak: Parle-G Success Story</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+                <!-- 4: The Sacrifice of Chaar Sahibzade -->
+                <a href="https://youtu.be/MxsHjXhlQ3Q" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/MxsHjXhlQ3Q/maxresdefault.jpg" class="video-thumb" alt="The Sacrifice of Chaar Sahibzade">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>The Sacrifice of Chaar Sahibzade</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+                <!-- 5: How Mamaearth Built ₹1000 Crore Brand -->
+                <a href="https://youtu.be/5P1gxjPPMX0" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/5P1gxjPPMX0/maxresdefault.jpg" class="video-thumb" alt="Mamaearth Built ₹1000 Crore Brand">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>How Mamaearth Built ₹1000 Crore Brand</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+                <!-- 6: Mushak aur Ganesh Ji Ki Kahani -->
+                <a href="https://youtu.be/x1iZFDFahr0" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/x1iZFDFahr0/maxresdefault.jpg" class="video-thumb" alt="Mushak aur Ganesh Ji Ki Kahani">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>मूषक कैसे बने गणेश जी का वाहन?</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+                <!-- 7: Health Insurance vs Term Insurance -->
+                <a href="https://youtu.be/B_dhagBuMMM" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/B_dhagBuMMM/maxresdefault.jpg" class="video-thumb" alt="Health Insurance vs Term Insurance">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Health Insurance vs Term Insurance Explained</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+                <!-- 8: Akshaya Tritiya -->
+                <a href="https://youtu.be/UFwcI6n5eHY" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/UFwcI6n5eHY/maxresdefault.jpg" class="video-thumb" alt="Akshaya Tritiya">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Akshaya Tritiya: Parashuram Janm</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+                <!-- 9: BLINKIT CONTROVERSY -->
+                <a href="https://youtu.be/IOaGm-SvddA" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/IOaGm-SvddA/maxresdefault.jpg" class="video-thumb" alt="BLINKIT CONTROVERSY">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>BLINKIT CONTROVERSY</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+                <!-- 10: Pandav Janm Katha -->
+                <a href="https://youtu.be/V5S1VPryS8c" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/V5S1VPryS8c/maxresdefault.jpg" class="video-thumb" alt="Pandav Janm Katha">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Pandav Janm Katha</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+                <!-- 11: Budget 2026 Analysis -->
+                <a href="https://youtu.be/KU8_QbcLb_Y" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/KU8_QbcLb_Y/maxresdefault.jpg" class="video-thumb" alt="Budget 2026 Analysis">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Budget 2026 Analysis</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+                <!-- 12: Ram Navami -->
+                <a href="https://youtu.be/ogE-Ht_9j68" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/ogE-Ht_9j68/maxresdefault.jpg" class="video-thumb" alt="Ram Navami">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>भगवान राम का जन्म क्यों हुआ? | Ram Navami</h3>
+                        <p>Influencer Act</p>
+                    </div>
+                </a>
+
+            </div>
+
+            <!-- 🟩 NEW G INDIA PARTITION -->
+            <a href="https://www.youtube.com/@NewGIndia" target="_blank" class="company-partition">
+                <h2>NewG India</h2>
+                <span>Visit Company Page →</span>
+            </a>
+
+            <div class="video-grid">
+                
+                <!-- 1: NewG India Launch -->
+                <a href="https://youtu.be/IRGh4p4G9kw" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/IRGh4p4G9kw/maxresdefault.jpg" class="video-thumb" alt="NewG India Launch">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>NewG India Launch | Navneet Sharan</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 2: Big Announcement -->
+                <a href="https://youtu.be/p3hjWYDdOCM" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/p3hjWYDdOCM/maxresdefault.jpg" class="video-thumb" alt="Big Announcement">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Big Announcement: मिलिए हमारी टीम के वरिष्ठ पत्रकार से</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 3: SSC Student Protest -->
+                <a href="https://youtu.be/GBObWO8Tco4" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/GBObWO8Tco4/maxresdefault.jpg" class="video-thumb" alt="SSC Student Protest">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>SSC Student Protest: दिल्ली के रामलीला मैदान में मोर्चा</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 4: The Political बैठकी -->
+                <a href="https://youtu.be/OYPlaRak9uo" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/OYPlaRak9uo/maxresdefault.jpg" class="video-thumb" alt="The Political Podcast with Kapil Mishra">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>The Political बैठकी - Podcast with Kapil Mishra</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 5: Healthy Zindagi Promo -->
+                <a href="https://youtu.be/Lbrdjx6Z_Dc" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/Lbrdjx6Z_Dc/maxresdefault.jpg" class="video-thumb" alt="Healthy Zindagi Promo">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Healthy Zindagi: A Podcast Promo</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 6: Healthy Zindagi Podcast Dr. C.S. Yadav -->
+                <a href="https://www.youtube.com/watch?v=_hUk6AsTZJ0" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/_hUk6AsTZJ0/maxresdefault.jpg" class="video-thumb" alt="Healthy Zindagi Podcast">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Healthy Zindagi Podcast | Ex. Prof AIIMS Dr. C.S. Yadav</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 7: बाबा की बैठकी -->
+                <a href="https://youtu.be/4gAIeChGiMY" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/4gAIeChGiMY/maxresdefault.jpg" class="video-thumb" alt="बाबा की बैठकी">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>बाबा की बैठकी | समाज और राजनीति पर चर्चा</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 8: उपराष्ट्रपति चुनाव -->
+                <a href="https://youtu.be/1JYPK9dvums" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/1JYPK9dvums/maxresdefault.jpg" class="video-thumb" alt="उपराष्ट्रपति चुनाव">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>उपराष्ट्रपति चुनाव: NDA को नंबर, विपक्ष को अंतरात्मा पर भरोसा</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 9: बाबा की बैठकी with MLA -->
+                <a href="https://www.youtube.com/watch?v=ECHy0MMy3pI" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/ECHy0MMy3pI/maxresdefault.jpg" class="video-thumb" alt="बाबा की बैठकी with MLA">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>बाबा की बैठकी with MLA Raj Kumar Bhatia</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 10: The Political बैठकी Devendra Yadav -->
+                <a href="https://www.youtube.com/watch?v=_mzU6ZLl-DY" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/_mzU6ZLl-DY/maxresdefault.jpg" class="video-thumb" alt="The Political बैठकी Devendra Yadav">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>The Political बैठकी | Devendra Yadav</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 11: प्रश्नकाल | ट्रम्प से एक भारतीय का सवाल -->
+                <a href="https://youtu.be/7uKrBKSWr10" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/7uKrBKSWr10/maxresdefault.jpg" class="video-thumb" alt="प्रश्नकाल ट्रम्प">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>प्रश्नकाल | ट्रम्प से एक भारतीय का सवाल: करें या न करें?</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 12: Trump–Putin की मुलाक़ात -->
+                <a href="https://youtu.be/oyOVOUite_o" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/oyOVOUite_o/maxresdefault.jpg" class="video-thumb" alt="Trump–Putin की मुलाक़ात">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Trump–Putin की मुलाक़ात: दुनिया की राजनीति का Turning Point?</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 13: Dengue, Corona, TB पर AIIMS -->
+                <a href="https://youtu.be/ku0L6mdGj9U" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/ku0L6mdGj9U/maxresdefault.jpg" class="video-thumb" alt="Dengue, Corona, TB">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Dengue, Corona, TB पर AIIMS Dr. Neeraj Nischal</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 14: Drone से चोरी -->
+                <a href="https://www.youtube.com/watch?v=oCOhM7WUhq0" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/oCOhM7WUhq0/maxresdefault.jpg" class="video-thumb" alt="Drone से चोरी">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Drone से चोरी की अफवाह ने मचाया हड़कंप!</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 15: चीन के राष्ट्रपति शी जिनपिंग -->
+                <a href="https://youtu.be/IttwH_mNARo" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/IttwH_mNARo/maxresdefault.jpg" class="video-thumb" alt="चीन के राष्ट्रपति">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>चीन के राष्ट्रपति शी जिनपिंग: क्या हम उम्मीद करें या नहीं?</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 16: आप ग़ज़ा का क्या करेंगे? -->
+                <a href="https://youtu.be/58biEVVqVGs" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/58biEVVqVGs/maxresdefault.jpg" class="video-thumb" alt="आप ग़ज़ा का क्या करेंगे">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>आप ग़ज़ा का क्या करेंगे? | Netanyahu से सवाल</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 17: संविधान बनाम हिंदू राष्ट्र -->
+                <a href="https://youtu.be/fqT6mDUCmgQ" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/fqT6mDUCmgQ/maxresdefault.jpg" class="video-thumb" alt="संविधान बनाम हिंदू राष्ट्र">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>संविधान बनाम हिंदू राष्ट्र: रामदास अठावले</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 18: Corporate छोड़कर Uniform -->
+                <a href="https://www.youtube.com/watch?v=ZM0aXv1cBTo" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/ZM0aXv1cBTo/maxresdefault.jpg" class="video-thumb" alt="Corporate छोड़कर Uniform">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Corporate छोड़कर Uniform अपनाई | UPSC CAPF</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 19: Vivek Kumar का खुलासा -->
+                <a href="https://youtu.be/oC_bbG-zTho" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/oC_bbG-zTho/maxresdefault.jpg" class="video-thumb" alt="Vivek Kumar का खुलासा">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Vivek Kumar का खुलासा | SSC Protest</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+                <!-- 20: Auto में मेकअप -->
+                <a href="https://youtu.be/tKuxsmCl5TI" target="_blank" class="video-tile">
+                    <img src="https://img.youtube.com/vi/tKuxsmCl5TI/maxresdefault.jpg" class="video-thumb" alt="Auto में मेकअप">
+                    <div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                    <div class="video-info">
+                        <h3>Auto में मेकअप, 10–20 टेक्स… Actress संस्कृति वर्मा</h3>
+                        <p>NewG India</p>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <!-- ==============================
+             EDITING TAB CONTENT 
+             ============================== -->
+        <div id="editing" class="tab-content">
+            <div class="video-grid">
+                <!-- Add Editing Content Here Later -->
+                <h3 style="color: var(--silver); text-align: center; width: 100%; grid-column: 1 / -1; margin-top: 50px;">Editing content coming soon...</h3>
+            </div>
+        </div>
+
+        <!-- ==============================
+             REELS TAB CONTENT 
+             ============================== -->
+        <div id="reels" class="tab-content">
+            <div class="video-grid">
+                <!-- Add Reels Content Here Later -->
+                <h3 style="color: var(--silver); text-align: center; width: 100%; grid-column: 1 / -1; margin-top: 50px;">Reels content coming soon...</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="glass-panel">
+        <div class="copyright-text">
+            <p>&copy; 2026 Peeyush Howladar. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function openTab(tabId) {
+            // 1. Hide all tab content sections
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // 2. Remove the "active" gold styling from all buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // 3. Show the specific content section we clicked on
+            document.getElementById(tabId).classList.add('active');
+
+            // 4. Add the gold "active" styling to the button we just clicked
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+Here is the complete, updated code for your `documentaries.html` page.
+
+I have organized the videos exactly in the numbered order you provided for both the **Shot** and **Edited** tabs.
+
+### ⚠️ Important Note About Google Drive Thumbnails
+
+Unlike YouTube, Google Drive is a private file storage system, not a public video host. While I have used a special Google Drive thumbnail trick in the code (`https://drive.google.com/thumbnail?id=...`), **Google Drive blocks these thumbnails from showing up on websites 90% of the time** for security reasons.
+
+If you save this code and the images show up as "broken" icons, you will need to manually take a screenshot of each video, save them in your folder (e.g., `doc1.jpg`), and replace the link in the `<img src="...">` tag.
+
+---
+
+Copy this code and completely replace the contents of your `documentaries.html` file:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentaries | Peeyush Howladar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 🎨 GLOBAL DESIGN SYSTEM */
+        :root {
+            --bg-main: #0D0D0D;
+            --text-main: #FFFFFF;
+            --gold: #D4AF37;
+            --silver: #C0C0C0;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-glow: rgba(212, 175, 55, 0.05);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            --border-radius: 24px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; line-height: 1.6; }
+        
+        .ambient-light { position: fixed; top: 10%; right: 20%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(0,0,0,0) 60%); border-radius: 50%; z-index: -1; filter: blur(80px); }
+        .glass-panel { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius); box-shadow: var(--glass-shadow), inset 0 0 20px var(--glass-glow); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+
+        /* NAVBAR */
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(13, 13, 13, 0.5); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); }
+        .nav-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-weight: 700; letter-spacing: 2px; }
+        .back-link { color: var(--silver); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; transition: color 0.3s; }
+        .back-link:hover { color: var(--gold); }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 150px 5% 50px; min-height: 80vh; }
+        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-header h1 { font-size: 4rem; font-weight: 700; letter-spacing: -1px; }
+        .text-gold { color: var(--gold); text-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+
+        /* 🗂️ TAB SYSTEM STYLES */
+        .tab-menu { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
+        
+        .tab-btn {
+            background: var(--glass-bg); color: var(--silver); border: 1px solid var(--glass-border);
+            padding: 12px 30px; border-radius: 50px; font-size: 1rem; font-weight: 500; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s ease; backdrop-filter: blur(10px);
+        }
+        
+        .tab-btn:hover { background: rgba(255, 255, 255, 0.1); color: var(--text-main); }
+        
+        .tab-btn.active {
+            background: rgba(212, 175, 55, 0.1); border-color: var(--gold); color: var(--gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.5s ease; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 🎬 VIDEO GRID & TILES */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .video-tile { position: relative; aspect-ratio: 16 / 9; overflow: hidden; display: block; text-decoration: none; border-radius: 16px; border: 1px solid var(--glass-border); }
+        .video-thumb { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6) contrast(1.1); transition: transform 0.6s ease, filter 0.3s ease; }
+        .video-tile:hover .video-thumb { transform: scale(1.05); filter: brightness(0.9) contrast(1.1); }
+        
+        .play-icon-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8); width: 60px; height: 60px; background: rgba(212, 175, 55, 0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transition: all 0.3s ease; }
+        .play-icon-overlay svg { width: 24px; height: 24px; fill: var(--bg-main); margin-left: 4px; }
+        .video-tile:hover .play-icon-overlay { opacity: 1; transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 30px rgba(212, 175, 55, 0.6); }
+
+        .video-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: var(--text-main); }
+        .video-info h3 { font-size: 1.2rem; font-weight: 500; margin-bottom: 5px; }
+        .video-info p { font-size: 0.8rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; }
+
+        footer { padding: 40px; margin: 40px 5%; text-align: center; }
+        .copyright-text { color: var(--silver); font-size: 0.9rem; font-weight: 300; }
+    </style>
+</head>
+<body>
+    <div class="ambient-light"></div>
+
+    <nav>
+        <div class="nav-logo">PH</div>
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1><span class="text-gold">Document</span>aries</h1>
+            <p style="color: var(--silver); margin-top: 10px; font-size: 1.1rem;">Select a category to explore.</p>
+        </div>
+
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="openTab('shot')">Shot</button>
+            <button class="tab-btn" onclick="openTab('edited')">Edited</button>
+        </div>
+
+        <div id="shot" class="tab-content active">
+            <div class="video-grid">
+                
+                <a href="https://drive.google.com/file/d/1ZBBAwSgdxPLoW9QN8vF12ecg0HBbzL2f/view?usp=drive_link" target="_blank" class="video-tile">
+                    <img src="https://drive.google.com/thumbnail?id=1ZBBAwSgdxPLoW9QN8vF12ecg0HBbzL2f&sz=w1000" class="video-thumb" alt="AN UNTOLD STORY - Leprosy">
+                    <div class="play-icon-overlay">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <div class="video-info">
+                        <h3>AN UNTOLD STORY - Leprosy</h3>
+                        <p>Documentary Shoot</p>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/1mQXfm0NmV9m1j3akUsvnpj2YbQOmg83g/view?usp=drive_link" target="_blank" class="video-tile">
+                    <img src="https://drive.google.com/thumbnail?id=1mQXfm0NmV9m1j3akUsvnpj2YbQOmg83g&sz=w1000" class="video-thumb" alt="UMAR KE USS PAAR">
+                    <div class="play-icon-overlay">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <div class="video-info">
+                        <h3>UMAR KE USS PAAR</h3>
+                        <p>Documentary Shoot</p>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/1N3d6ewQVkhnPtvx2jmv9vRm0rkZufqY6/view?usp=drive_link" target="_blank" class="video-tile">
+                    <img src="https://drive.google.com/thumbnail?id=1N3d6ewQVkhnPtvx2jmv9vRm0rkZufqY6&sz=w1000" class="video-thumb" alt="YAMUNA KHADAR VILLAGE">
+                    <div class="play-icon-overlay">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <div class="video-info">
+                        <h3>YAMUNA KHADAR VILLAGE</h3>
+                        <p>Documentary Shoot</p>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/15q_t8vwDLHsL25YmJlbZTVlepvr_re9f/view?usp=drive_link" target="_blank" class="video-tile">
+                    <img src="https://drive.google.com/thumbnail?id=15q_t8vwDLHsL25YmJlbZTVlepvr_re9f&sz=w1000" class="video-thumb" alt="YAMUNA GHAT">
+                    <div class="play-icon-overlay">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <div class="video-info">
+                        <h3>YAMUNA GHAT</h3>
+                        <p>Documentary Shoot</p>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <div id="edited" class="tab-content">
+            <div class="video-grid">
+                
+                <a href="https://drive.google.com/file/d/1ZBBAwSgdxPLoW9QN8vF12ecg0HBbzL2f/view?usp=drive_link" target="_blank" class="video-tile">
+                    <img src="https://drive.google.com/thumbnail?id=1ZBBAwSgdxPLoW9QN8vF12ecg0HBbzL2f&sz=w1000" class="video-thumb" alt="AN UNTOLD STORY - Leprosy">
+                    <div class="play-icon-overlay">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <div class="video-info">
+                        <h3>AN UNTOLD STORY - Leprosy</h3>
+                        <p>Post-Production & Editing</p>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/1mQXfm0NmV9m1j3akUsvnpj2YbQOmg83g/view?usp=drive_link" target="_blank" class="video-tile">
+                    <img src="https://drive.google.com/thumbnail?id=1mQXfm0NmV9m1j3akUsvnpj2YbQOmg83g&sz=w1000" class="video-thumb" alt="UMAR KE USS PAAR">
+                    <div class="play-icon-overlay">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <div class="video-info">
+                        <h3>UMAR KE USS PAAR</h3>
+                        <p>Post-Production & Editing</p>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/1N3d6ewQVkhnPtvx2jmv9vRm0rkZufqY6/view?usp=drive_link" target="_blank" class="video-tile">
+                    <img src="https://drive.google.com/thumbnail?id=1N3d6ewQVkhnPtvx2jmv9vRm0rkZufqY6&sz=w1000" class="video-thumb" alt="YAMUNA KHADAR VILLAGE">
+                    <div class="play-icon-overlay">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <div class="video-info">
+                        <h3>YAMUNA KHADAR VILLAGE</h3>
+                        <p>Post-Production & Editing</p>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/15q_t8vwDLHsL25YmJlbZTVlepvr_re9f/view?usp=drive_link" target="_blank" class="video-tile">
+                    <img src="https://drive.google.com/thumbnail?id=15q_t8vwDLHsL25YmJlbZTVlepvr_re9f&sz=w1000" class="video-thumb" alt="YAMUNA GHAT">
+                    <div class="play-icon-overlay">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <div class="video-info">
+                        <h3>YAMUNA GHAT</h3>
+                        <p>Post-Production & Editing</p>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="glass-panel">
+        <div class="copyright-text">
+            <p>&copy; 2026 Peeyush Howladar. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function openTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
+
+```

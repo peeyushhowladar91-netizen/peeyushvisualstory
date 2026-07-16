@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Storyteller & Filmmaker | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 🎨 GLOBAL DESIGN SYSTEM */
+        :root {
+            --bg-main: #0D0D0D;
+            --text-main: #FFFFFF;
+            --gold: #D4AF37;
+            --silver: #C0C0C0;
+            
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-glow: rgba(212, 175, 55, 0.05);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            --border-radius: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .ambient-light {
+            position: fixed;
+            top: 10%;
+            right: 20%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(0,0,0,0) 60%);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(80px);
+        }
+
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            box-shadow: var(--glass-shadow), inset 0 0 20px var(--glass-glow);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 5% 50px; 
+            display: flex;
+            flex-direction: column;
+            gap: 40px; 
+        }
+
+        /* 🔝 1. NAVBAR */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(13, 13, 13, 0.5); 
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass-bg);
+            font-weight: 700;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 5px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--gold);
+            box-shadow: 0 0 10px var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* 🧩 2. HERO SECTION */
+        .hero {
+            display: flex;
+            align-items: stretch; 
+            padding: 60px;
+            gap: 60px;
+        }
+
+        .hero-left {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+        }
+
+        .hero-dp {
+            width: 100%;
+            max-width: 380px; 
+            height: auto;
+            aspect-ratio: 3 / 4; 
+            border-radius: 20px; 
+            object-fit: cover;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.15);
+        }
+
+        .hero-right {
+            flex: 1; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+        }
+
+        .label {
+            font-size: 0.8rem;
+            color: var(--silver);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .hero-right h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .text-gold {
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .hero-intro {
+            font-size: 1rem; 
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: var(--text-main);
+            max-width: 650px;
+            line-height: 1.7;
+        }
+
+        .hero-desc {
+            font-size: 1rem; 
+            color: var(--silver);
+            max-width: 600px;
+            margin-bottom: 40px;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        /* 🎬 3. SHOWREEL SECTION */
+        .showreel {
+            display: flex;
+            padding: 50px;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .showreel-left {
+            flex: 0 0 40%;
+        }
+
+        .showreel-left h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .showreel-left p {
+            color: var(--silver);
+            margin-bottom: 30px;
+            font-weight: 300;
+            font-size: 1.1rem;
+        }
+
+        .showreel-right {
+            flex: 0 0 60%;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+        }
+
+        .showreel-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) contrast(1.2);
+            transition: transform 0.5s ease;
+        }
+
+        .showreel-right:hover .showreel-thumb {
+            transform: scale(1.05);
+        }
+
+        .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90px;
+            height: 90px;
+            background: var(--gold); 
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.6); 
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .play-btn svg {
+            width: 35px;
+            height: 35px;
+            fill: var(--bg-main); 
+            margin-left: 5px;
+        }
+
+        .play-btn:hover {
+            transform: translate(-50%, -50%) scale(1.15);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.6);
+            background: rgba(212, 175, 55, 0.25);
+        }
+
+        /* 🎞️ 4. CATEGORY TILES */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .category-tile {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .category-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.5);
+            transition: transform 0.6s ease;
+        }
+
+        .category-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 80%);
+            z-index: 1;
+        }
+
+        .category-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .cat-icon {
+            width: 30px;
+            height: 30px;
+            margin-bottom: 15px;
+            stroke: var(--gold);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .category-content h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .arrow-icon {
+            font-size: 1.5rem;
+            color: var(--gold);
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .category-tile:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.15);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        .category-tile:hover .category-bg {
+            transform: scale(1.1);
+        }
+
+        .category-tile:hover .arrow-icon {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* 🧱 5. FOOTER SECTION */
+        footer {
+            padding: 60px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand .nav-logo {
+            margin-bottom: 20px;
+            width: 60px;
+            height: 60px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .footer-links h4, .footer-contact h4 {
+            color: var(--gold);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a, .footer-contact p {
+            color: var(--silver);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 300;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* GENERALIZED SOCIAL ICON BUTTON CLASS */
+        .social-img-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: inline-block;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            background: var(--glass-bg);
+        }
+        
+        .social-img-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .social-img-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--gold);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .copyright-text {
+            color: var(--silver);
+            font-size: 0.9rem;
+            text-align: right;
+            font-weight: 300;
+        }
+
+        /* ✨ MICRO-INTERACTIONS (Fade In on Scroll) */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                        transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 📱 RESPONSIVENESS */
+        @media (max-width: 992px) {
+            .hero { flex-direction: column; text-align: center; padding: 40px; }
+            .hero-left, .hero-right { flex: auto; align-items: center; width: 100%; }
+            .cta-group { justify-content: center; }
+            .showreel { flex-direction: column; padding: 40px; }
+            .categories { grid-template-columns: 1fr; }
+            .footer-top { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 20px; }
+            .nav-links { display: none; } 
+            .hero-right h1 { font-size: 2.5rem; }
+            .cta-group { flex-direction: column; }
+            .footer-top { grid-template-columns: 1fr; text-align: center; }
+            .footer-brand .nav-logo { margin: 0 auto 20px; }
+            .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-light"></div>
+
+    <nav>
+        <div class="nav-logo">PH</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#home">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <section id="home" class="glass-panel hero fade-in">
+            <div class="hero-left">
+                <img src="Profile-pic.jpeg" alt="Peeyush Howladar portrait" class="hero-dp">
+            </div>
+            <div class="hero-right">
+                <span class="label">Filmmaker | Storyteller | Visual Artist</span>
+                <h1>Hi, I'm <span class="text-gold">Peeyush Howladar</span></h1>
+                
+                <h3 class="hero-intro">Video production specialist with 4+ years of experience across filmmaking, event coverage, and digital content creation. Skilled in elevating visual quality through advanced camera operation, creative cinematography, and professional color grading. Adept at capturing compelling visuals in diverse environments and shaping narratives through precise editing and sound design. Detail-oriented and collaborative, consistently delivering high-impact, visually engaging content.</h3>
+                
+                <p class="hero-desc">With a strong eye for detail and a passion for storytelling, I bring ideas to life through powerful visuals and cinematic experiences.</p>
+                <div class="cta-group">
+                    <a href="#portfolio" class="btn btn-primary">View Portfolio →</a>
+                    <a href="#contact" class="btn btn-secondary">Contact Me</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="glass-panel showreel fade-in">
+            <div class="showreel-left">
+                <span class="label">Showreel</span>
+                <h2>Showreel <span class="text-gold">2026</span></h2>
+                <p>A glimpse of the stories I've told and the worlds I've created.</p>
+                <a href="#" class="btn btn-primary">Play Showreel →</a>
+            </div>
+            <div class="showreel-right">
+                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1920&auto=format&fit=crop" alt="Showreel Cinematic Shot" class="showreel-thumb">
+                <div class="play-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <section class="categories fade-in">
+            
+            <a href="corporate.html" class="glass-panel category-tile">
+                <img src="Corporate Thumb.jpg" class="category-bg" alt="Corporate Shoot Thumbnail">
+                <div class="category-overlay"></div>
+                <div class="category-content">
+                    <div>
+                        <svg class="cat-icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm0 4v10h16V8H4z"/></svg>
+                        <h3>Corporate Shoot</h3>
+                    </div>
+                    <span class="arrow-icon">→</span>
+                </div>
+            </a>
+
+            <a href="shortfilms.html" class="glass-panel category-tile">
+                <img src="https://images.unsplash.com/photo-1601042879364-f3947d3f9c16?q=80&w=800&auto=format&fit=crop" class="category-bg" alt="Short films Thumbnail">
+                <div class="category-overlay"></div>
+                <div class="category-content">
+                    <div>
+                        <svg class="cat-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                        <h3>Shortfilms</h3>
+                    </div>
+                    <span class="arrow-icon">→</span>
+                </div>
+            </a>
+
+            <a href="documentaries.html" class="glass-panel category-tile">
+                <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=800&auto=format&fit=crop" class="category-bg" alt="Documentaries Thumbnail">
+                <div class="category-overlay"></div>
+                <div class="category-content">
+                    <div>
+                        <svg class="cat-icon" viewBox="0 0 24 24"><path d="M21 4H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-9 12H4v-2h8v2zm0-4H4V10h8v2zm0-4H4V6h8v2zm8 8h-6V6h6v10z"/></svg>
+                        <h3>Documentaries</h3>
+                    </div>
+                    <span class="arrow-icon">→</span>
+                </div>
+            </a>
+
+        </section>
+
+        <footer id="contact" class="glass-panel fade-in">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="nav-logo">PH</div>
+                    <h3>Peeyush Howladar</h3>
+                    <p class="label" style="font-size: 0.7rem;">Filmmaker | Storyteller | Visual Artist</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#home">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h4>Get In Touch</h4>
+                    <p style="margin-bottom: 10px;">peeyushhowladar91@gmail.com</p>
+                    <p style="margin-bottom: 10px;">+91 83685 50663</p>
+                    <p>Ghaziabad, Uttar Pradesh, India</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                
+                <div class="social-icons">
+                    <a href="https://linkedin.com/in/peeyushvisualstoryteller" class="social-img-btn" target="_blank">
+                        <img src="linkedin.jpg" alt="LinkedIn Logo">
+                    </a>
+                    <a href="https://wa.me/918368550663" class="social-img-btn" target="_blank">
+                        <img src="Whatsapp.png" alt="WhatsApp Logo">
+                    </a>
+                    <a href="https://x.com/PeeyushHow88672" class="social-img-btn" target="_blank">
+                        <img src="Twitter.png" alt="Twitter Logo">
+                    </a>
+                    <a href="mailto:peeyushhowladar91@gmail.com" class="social-img-btn">
+                        <img src="Gmail.Png" alt="Email Logo">
+                    </a>
+                </div>
+                
+                <div class="copyright-text">
+                    <p>&copy; 2026 Peeyush Howladar. All Rights Reserved.</p>
+                    <p style="font-size: 0.8rem; margin-top: 5px; color: var(--gold);">Designed with Passion 💛</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
