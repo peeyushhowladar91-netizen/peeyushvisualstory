@@ -68,7 +68,17 @@
 
         /* 🎬 VIDEO GRID & TILES */
         .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        
+/* 📱 SHORTS / REELS GRID (5 Columns) */
+        .shorts-grid { 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); 
+            gap: 20px; 
+        }
+
+        /* Responsive rules so it doesn't break on phones/tablets */
+        @media (max-width: 1200px) { .shorts-grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 900px) { .shorts-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 600px) { .shorts-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }        
         .video-tile { position: relative; aspect-ratio: 16 / 9; overflow: hidden; display: block; text-decoration: none; border-radius: 16px; border: 1px solid var(--glass-border); }
         .video-thumb { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6) contrast(1.1); transition: transform 0.6s ease, filter 0.3s ease; }
         .video-tile:hover .video-thumb { transform: scale(1.05); filter: brightness(0.9) contrast(1.1); }
@@ -821,7 +831,7 @@
                 <span>Visit YouTube Page →</span>
             </a>
 
-            <div class="video-grid">
+            <div class="shorts-grid">
                 <a href="https://www.youtube.com/shorts/QlQXkDj2WjY" target="_blank" class="video-tile" style="aspect-ratio: 9 / 16;"><img src="https://img.youtube.com/vi/QlQXkDj2WjY/maxresdefault.jpg" class="video-thumb" alt="Short"><div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="video-info"><h3>Can You Beat Our Office Tongue Twister Challenge?</h3><p>Influencer Act</p></div></a>
                 <a href="https://www.youtube.com/shorts/1QN8yDgP3Tg" target="_blank" class="video-tile" style="aspect-ratio: 9 / 16;"><img src="https://img.youtube.com/vi/1QN8yDgP3Tg/maxresdefault.jpg" class="video-thumb" alt="Short"><div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="video-info"><h3>Dedicate a Song to Your Manager 😂🎵 | Office Challenge</h3><p>Influencer Act</p></div></a>
                 <a href="https://www.youtube.com/shorts/tRzUdsZVRDk" target="_blank" class="video-tile" style="aspect-ratio: 9 / 16;"><img src="https://img.youtube.com/vi/tRzUdsZVRDk/maxresdefault.jpg" class="video-thumb" alt="Short"><div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="video-info"><h3>Office Twinning Just Happened</h3><p>Influencer Act</p></div></a>
@@ -860,7 +870,7 @@
                 <span>Visit YouTube Page →</span>
             </a>
 
-            <div class="video-grid">
+            <div class="shorts-grid">
                 <a href="https://www.youtube.com/shorts/0ZlMj2xWUEE" target="_blank" class="video-tile" style="aspect-ratio: 9 / 16;"><img src="https://img.youtube.com/vi/0ZlMj2xWUEE/maxresdefault.jpg" class="video-thumb" alt="Short"><div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="video-info"><h3>Aaj Ke Updates Short</h3><p>Aaj Ke Updates</p></div></a>
                 <a href="https://www.youtube.com/shorts/0ZlMj2xWUEE" target="_blank" class="video-tile" style="aspect-ratio: 9 / 16;"><img src="https://img.youtube.com/vi/0ZlMj2xWUEE/maxresdefault.jpg" class="video-thumb" alt="Short"><div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="video-info"><h3>Aaj Ke Updates Short</h3><p>Aaj Ke Updates</p></div></a>
                 <a href="https://www.youtube.com/shorts/kYbwrmsYsAQ" target="_blank" class="video-tile" style="aspect-ratio: 9 / 16;"><img src="https://img.youtube.com/vi/kYbwrmsYsAQ/maxresdefault.jpg" class="video-thumb" alt="Short"><div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="video-info"><h3>Aaj Ke Updates Short</h3><p>Aaj Ke Updates</p></div></a>
@@ -906,7 +916,7 @@
                 <span>Visit Company Page →</span>
             </a>
 
-            <div class="video-grid">
+            <div class="shorts-grid">
                 <a href="https://www.youtube.com/shorts/I1IUgMR8J34" target="_blank" class="video-tile" style="aspect-ratio: 9 / 16;"><img src="https://img.youtube.com/vi/I1IUgMR8J34/maxresdefault.jpg" class="video-thumb" alt="Short"><div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="video-info"><h3>NewG India Short</h3><p>NewG India</p></div></a>
                 <a href="https://www.youtube.com/shorts/p3SRQiP5PtA" target="_blank" class="video-tile" style="aspect-ratio: 9 / 16;"><img src="https://img.youtube.com/vi/p3SRQiP5PtA/maxresdefault.jpg" class="video-thumb" alt="Short"><div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="video-info"><h3>NewG India Short</h3><p>NewG India</p></div></a>
                 <a href="https://www.youtube.com/shorts/6s7VbNEvhHU" target="_blank" class="video-tile" style="aspect-ratio: 9 / 16;"><img src="https://img.youtube.com/vi/6s7VbNEvhHU/maxresdefault.jpg" class="video-thumb" alt="Short"><div class="play-icon-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="video-info"><h3>NewG India Short</h3><p>NewG India</p></div></a>
