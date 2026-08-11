@@ -1,241 +1,823 @@
-Here is the complete, updated code for your `documentaries.html` page.
-
-I have organized the videos exactly in the numbered order you provided for both the **Shot** and **Edited** tabs.
-
-### ⚠️ Important Note About Google Drive Thumbnails
-
-Unlike YouTube, Google Drive is a private file storage system, not a public video host. While I have used a special Google Drive thumbnail trick in the code (`https://drive.google.com/thumbnail?id=...`), **Google Drive blocks these thumbnails from showing up on websites 90% of the time** for security reasons.
-
-If you save this code and the images show up as "broken" icons, you will need to manually take a screenshot of each video, save them in your folder (e.g., `doc1.jpg`), and replace the link in the `<img src="...">` tag.
-
----
-
-Copy this code and completely replace the contents of your `documentaries.html` file:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentary filmmaking, cinematography and editing portfolio of Peeyush Howladar.">
     <title>Documentaries | Peeyush Howladar</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* 🎨 GLOBAL DESIGN SYSTEM */
         :root {
             --bg-main: #0D0D0D;
+            --bg-soft: #111111;
             --text-main: #FFFFFF;
             --gold: #D4AF37;
+            --gold-soft: rgba(212,175,55,0.12);
             --silver: #C0C0C0;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --glass-glow: rgba(212, 175, 55, 0.05);
-            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-            --border-radius: 24px;
+            --muted: #858585;
+            --glass-bg: rgba(255,255,255,0.045);
+            --glass-border: rgba(255,255,255,0.11);
+            --glass-shadow: 0 18px 60px rgba(0,0,0,0.55);
+            --radius-xl: 30px;
+            --radius-lg: 22px;
+            --max-width: 1400px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; line-height: 1.6; }
-        
-        .ambient-light { position: fixed; top: 10%; right: 20%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(0,0,0,0) 60%); border-radius: 50%; z-index: -1; filter: blur(80px); }
-        .glass-panel { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--border-radius); box-shadow: var(--glass-shadow), inset 0 0 20px var(--glass-glow); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
 
-        /* NAVBAR */
-        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(13, 13, 13, 0.5); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); }
-        .nav-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-weight: 700; letter-spacing: 2px; }
-        .back-link { color: var(--silver); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; transition: color 0.3s; }
+        html { scroll-padding-top: 105px; }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 78% 8%, rgba(212,175,55,0.055), transparent 27%),
+                var(--bg-main);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        button { font: inherit; }
+
+        .ambient-light {
+            position: fixed;
+            width: 48vw;
+            height: 48vw;
+            top: -20vw;
+            right: -10vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,175,55,0.10), transparent 68%);
+            filter: blur(48px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .ambient-light-two {
+            position: fixed;
+            width: 36vw;
+            height: 36vw;
+            bottom: -18vw;
+            left: -12vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,175,55,0.045), transparent 68%);
+            filter: blur(55px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .glass {
+            background: linear-gradient(145deg, rgba(255,255,255,0.055), rgba(255,255,255,0.025));
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow), inset 0 0 24px rgba(212,175,55,0.04);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 82px;
+            padding: 0 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            background: rgba(13,13,13,0.76);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .nav-logo {
+            width: 48px;
+            height: 48px;
+            border: 1.5px solid var(--gold);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            box-shadow: 0 0 24px rgba(212,175,55,0.16);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--silver);
+            text-decoration: none;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.25s ease;
+        }
+
         .back-link:hover { color: var(--gold); }
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 150px 5% 50px; min-height: 80vh; }
-        .page-header { text-align: center; margin-bottom: 40px; }
-        .page-header h1 { font-size: 4rem; font-weight: 700; letter-spacing: -1px; }
-        .text-gold { color: var(--gold); text-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+        /* PAGE HEADER */
+        .page {
+            width: min(var(--max-width), 90%);
+            margin: 0 auto;
+        }
 
-        /* 🗂️ TAB SYSTEM STYLES */
-        .tab-menu { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
-        
+        .page-header {
+            padding: 145px 0 50px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--silver);
+            font-size: 0.68rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+        }
+
+        .eyebrow::before,
+        .eyebrow::after {
+            content: "";
+            width: 28px;
+            height: 1px;
+            background: var(--gold);
+            box-shadow: 0 0 9px rgba(212,175,55,0.55);
+        }
+
+        .page-header h1 {
+            font-size: clamp(3.4rem, 8vw, 7rem);
+            line-height: 0.92;
+            letter-spacing: -0.065em;
+            font-weight: 800;
+        }
+
+        .gold {
+            color: var(--gold);
+            text-shadow: 0 0 28px rgba(212,175,55,0.2);
+        }
+
+        .page-header p {
+            max-width: 620px;
+            margin: 22px auto 0;
+            color: var(--silver);
+            font-size: 0.98rem;
+            line-height: 1.8;
+        }
+
+        .page-stats {
+            display: flex;
+            justify-content: center;
+            gap: 36px;
+            flex-wrap: wrap;
+            margin-top: 32px;
+            color: var(--muted);
+            font-size: 0.68rem;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+        }
+
+        .page-stats strong {
+            color: var(--gold);
+            margin-right: 6px;
+            font-weight: 600;
+        }
+
+        /* TABS */
+        .tab-menu {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 38px;
+            padding: 7px;
+            width: fit-content;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 999px;
+        }
+
         .tab-btn {
-            background: var(--glass-bg); color: var(--silver); border: 1px solid var(--glass-border);
-            padding: 12px 30px; border-radius: 50px; font-size: 1rem; font-weight: 500; cursor: pointer;
-            text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s ease; backdrop-filter: blur(10px);
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--silver);
+            padding: 13px 30px;
+            border-radius: 999px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
-        
-        .tab-btn:hover { background: rgba(255, 255, 255, 0.1); color: var(--text-main); }
-        
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.05);
+        }
+
         .tab-btn.active {
-            background: rgba(212, 175, 55, 0.1); border-color: var(--gold); color: var(--gold);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+            border-color: rgba(212,175,55,0.55);
+            background: var(--gold-soft);
+            box-shadow: 0 0 24px rgba(212,175,55,0.10);
         }
 
-        .tab-content { display: none; animation: fadeIn 0.5s ease; }
-        .tab-content.active { display: block; }
+        .tab-btn:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 3px;
+        }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        .tab-content { display: none; }
+
+        .tab-content.active {
+            display: block;
+            animation: tabIn 0.45s ease both;
+        }
+
+        @keyframes tabIn {
+            from { opacity: 0; transform: translateY(16px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 🎬 VIDEO GRID & TILES */
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
-        .video-tile { position: relative; aspect-ratio: 16 / 9; overflow: hidden; display: block; text-decoration: none; border-radius: 16px; border: 1px solid var(--glass-border); }
-        .video-thumb { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6) contrast(1.1); transition: transform 0.6s ease, filter 0.3s ease; }
-        .video-tile:hover .video-thumb { transform: scale(1.05); filter: brightness(0.9) contrast(1.1); }
-        
-        .play-icon-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8); width: 60px; height: 60px; background: rgba(212, 175, 55, 0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transition: all 0.3s ease; }
-        .play-icon-overlay svg { width: 24px; height: 24px; fill: var(--bg-main); margin-left: 4px; }
-        .video-tile:hover .play-icon-overlay { opacity: 1; transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 30px rgba(212, 175, 55, 0.6); }
+        /* VIDEO GRID */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
 
-        .video-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: var(--text-main); }
-        .video-info h3 { font-size: 1.2rem; font-weight: 500; margin-bottom: 5px; }
-        .video-info p { font-size: 0.8rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; }
+        .video-card {
+            position: relative;
+            overflow: hidden;
+            display: block;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            background: var(--bg-soft);
+            text-decoration: none;
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
 
-        footer { padding: 40px; margin: 40px 5%; text-align: center; }
-        .copyright-text { color: var(--silver); font-size: 0.9rem; font-weight: 300; }
+        .video-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(212,175,55,0.42);
+            box-shadow: 0 24px 55px rgba(0,0,0,0.48), 0 0 25px rgba(212,175,55,0.08);
+        }
+
+        .card-media {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #090909;
+        }
+
+        .video-thumb {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            filter: brightness(0.62) contrast(1.08) saturate(0.82);
+            transition: transform 0.7s ease, filter 0.45s ease;
+        }
+
+        .video-card:hover .video-thumb {
+            transform: scale(1.045);
+            filter: brightness(0.78) contrast(1.08) saturate(0.9);
+        }
+
+        .media-shade {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.04), rgba(0,0,0,0.32));
+            pointer-events: none;
+        }
+
+        .card-number {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            color: var(--gold);
+            font-size: 0.66rem;
+            letter-spacing: 2px;
+            font-weight: 600;
+            padding: 7px 9px;
+            border: 1px solid rgba(212,175,55,0.32);
+            border-radius: 8px;
+            background: rgba(13,13,13,0.64);
+            backdrop-filter: blur(10px);
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 62px;
+            height: 62px;
+            display: grid;
+            place-items: center;
+            transform: translate(-50%, -50%) scale(0.86);
+            border-radius: 50%;
+            border: 1px solid rgba(212,175,55,0.65);
+            background: rgba(212,175,55,0.82);
+            box-shadow: 0 0 30px rgba(212,175,55,0.24);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .play-button svg {
+            width: 25px;
+            height: 25px;
+            fill: var(--bg-main);
+            margin-left: 3px;
+        }
+
+        .video-card:hover .play-button,
+        .video-card:focus-visible .play-button {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .video-info {
+            padding: 21px 22px 23px;
+            min-height: 132px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .video-role {
+            color: var(--gold);
+            font-size: 0.62rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .video-info h3 {
+            margin-top: 8px;
+            color: var(--text-main);
+            font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+            font-weight: 600;
+            line-height: 1.25;
+            letter-spacing: -0.015em;
+        }
+
+        .watch-link {
+            margin-top: auto;
+            padding-top: 15px;
+            color: var(--muted);
+            font-size: 0.68rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: color 0.25s ease;
+        }
+
+        .watch-link span {
+            color: var(--gold);
+            margin-left: 5px;
+        }
+
+        .video-card:hover .watch-link { color: var(--silver); }
+
+        /* FOOTER */
+        footer {
+            margin-top: 80px;
+            padding: 45px 0 30px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .footer-copy strong {
+            display: block;
+            font-size: 0.92rem;
+        }
+
+        .footer-copy span {
+            display: block;
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 0.68rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .footer-back {
+            color: var(--silver);
+            text-decoration: none;
+            font-size: 0.7rem;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            transition: color 0.25s ease;
+        }
+
+        .footer-back:hover { color: var(--gold); }
+
+        .footer-bottom {
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            color: var(--muted);
+            font-size: 0.68rem;
+        }
+
+        .footer-bottom .gold-text { color: var(--gold); }
+
+        /* ACCESSIBILITY / MOBILE */
+        .video-card:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 4px;
+        }
+
+        @media (max-width: 900px) {
+            .video-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                height: 72px;
+                padding: 0 5%;
+            }
+
+            .nav-logo {
+                width: 44px;
+                height: 44px;
+            }
+
+            .back-link {
+                font-size: 0.62rem;
+                letter-spacing: 1.4px;
+            }
+
+            .page-header {
+                padding-top: 122px;
+                padding-bottom: 38px;
+            }
+
+            .page-header h1 {
+                font-size: clamp(3rem, 16vw, 5rem);
+            }
+
+            .page-header p {
+                font-size: 0.88rem;
+            }
+
+            .page-stats {
+                gap: 16px;
+                font-size: 0.6rem;
+            }
+
+            .tab-menu {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .tab-btn {
+                flex: 1;
+                padding: 12px 18px;
+            }
+
+            .video-grid {
+                gap: 16px;
+            }
+
+            .video-info {
+                min-height: 122px;
+                padding: 18px;
+            }
+
+            .play-button {
+                opacity: 1;
+                width: 52px;
+                height: 52px;
+                background: rgba(212,175,55,0.72);
+                transform: translate(-50%, -50%) scale(0.9);
+            }
+
+            .footer-main {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="ambient-light"></div>
+    <div class="ambient-light-two"></div>
 
-    <nav>
-        <div class="nav-logo">PH</div>
+    <nav aria-label="Portfolio navigation">
+        <a href="index.html" class="nav-logo" aria-label="Back to Peeyush Howladar home">PH</a>
         <a href="index.html" class="back-link">← Back to Portfolio</a>
     </nav>
 
-    <div class="container">
-        <div class="page-header">
-            <h1><span class="text-gold">Document</span>aries</h1>
-            <p style="color: var(--silver); margin-top: 10px; font-size: 1.1rem;">Select a category to explore.</p>
-        </div>
+    <main class="page">
+        <header class="page-header">
+            <div class="eyebrow">Visual Storytelling · Non-Fiction</div>
+            <h1><span class="gold">Document</span>aries</h1>
+            <p>
+                Real people, real places and real stories — explored through cinematography,
+                field production and post-production.
+            </p>
 
-        <div class="tab-menu">
-            <button class="tab-btn active" onclick="openTab('shot')">Shot</button>
-            <button class="tab-btn" onclick="openTab('edited')">Edited</button>
-        </div>
-
-        <div id="shot" class="tab-content active">
-            <div class="video-grid">
-                
-                <a href="https://drive.google.com/file/d/1ZBBAwSgdxPLoW9QN8vF12ecg0HBbzL2f/view?usp=drive_link" target="_blank" class="video-tile">
-                    <img src="https://drive.google.com/thumbnail?id=1ZBBAwSgdxPLoW9QN8vF12ecg0HBbzL2f&sz=w1000" class="video-thumb" alt="AN UNTOLD STORY - Leprosy">
-                    <div class="play-icon-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    </div>
-                    <div class="video-info">
-                        <h3>AN UNTOLD STORY - Leprosy</h3>
-                        <p>Documentary Shoot</p>
-                    </div>
-                </a>
-
-                <a href="https://drive.google.com/file/d/1mQXfm0NmV9m1j3akUsvnpj2YbQOmg83g/view?usp=drive_link" target="_blank" class="video-tile">
-                    <img src="https://drive.google.com/thumbnail?id=1mQXfm0NmV9m1j3akUsvnpj2YbQOmg83g&sz=w1000" class="video-thumb" alt="UMAR KE USS PAAR">
-                    <div class="play-icon-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    </div>
-                    <div class="video-info">
-                        <h3>UMAR KE USS PAAR</h3>
-                        <p>Documentary Shoot</p>
-                    </div>
-                </a>
-
-                <a href="https://drive.google.com/file/d/1N3d6ewQVkhnPtvx2jmv9vRm0rkZufqY6/view?usp=drive_link" target="_blank" class="video-tile">
-                    <img src="https://drive.google.com/thumbnail?id=1N3d6ewQVkhnPtvx2jmv9vRm0rkZufqY6&sz=w1000" class="video-thumb" alt="YAMUNA KHADAR VILLAGE">
-                    <div class="play-icon-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    </div>
-                    <div class="video-info">
-                        <h3>YAMUNA KHADAR VILLAGE</h3>
-                        <p>Documentary Shoot</p>
-                    </div>
-                </a>
-
-                <a href="https://drive.google.com/file/d/15q_t8vwDLHsL25YmJlbZTVlepvr_re9f/view?usp=drive_link" target="_blank" class="video-tile">
-                    <img src="https://drive.google.com/thumbnail?id=15q_t8vwDLHsL25YmJlbZTVlepvr_re9f&sz=w1000" class="video-thumb" alt="YAMUNA GHAT">
-                    <div class="play-icon-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    </div>
-                    <div class="video-info">
-                        <h3>YAMUNA GHAT</h3>
-                        <p>Documentary Shoot</p>
-                    </div>
-                </a>
-
+            <div class="page-stats" aria-label="Documentary portfolio summary">
+                <span><strong>04</strong> Projects</span>
+                <span><strong>02</strong> Roles</span>
+                <span><strong>01</strong> Visual Language</span>
             </div>
-        </div>
+        </header>
 
-        <div id="edited" class="tab-content">
-            <div class="video-grid">
-                
-                <a href="https://drive.google.com/file/d/1ZBBAwSgdxPLoW9QN8vF12ecg0HBbzL2f/view?usp=drive_link" target="_blank" class="video-tile">
-                    <img src="https://drive.google.com/thumbnail?id=1ZBBAwSgdxPLoW9QN8vF12ecg0HBbzL2f&sz=w1000" class="video-thumb" alt="AN UNTOLD STORY - Leprosy">
-                    <div class="play-icon-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    </div>
-                    <div class="video-info">
-                        <h3>AN UNTOLD STORY - Leprosy</h3>
-                        <p>Post-Production & Editing</p>
-                    </div>
-                </a>
+        <section aria-label="Documentary portfolio">
+            <div class="tab-menu glass" role="tablist" aria-label="Documentary work type">
+                <button class="tab-btn active"
+                        id="shot-tab"
+                        role="tab"
+                        aria-selected="true"
+                        aria-controls="shot"
+                        tabindex="0"
+                        data-tab="shot">Shot</button>
 
-                <a href="https://drive.google.com/file/d/1mQXfm0NmV9m1j3akUsvnpj2YbQOmg83g/view?usp=drive_link" target="_blank" class="video-tile">
-                    <img src="https://drive.google.com/thumbnail?id=1mQXfm0NmV9m1j3akUsvnpj2YbQOmg83g&sz=w1000" class="video-thumb" alt="UMAR KE USS PAAR">
-                    <div class="play-icon-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    </div>
-                    <div class="video-info">
-                        <h3>UMAR KE USS PAAR</h3>
-                        <p>Post-Production & Editing</p>
-                    </div>
-                </a>
-
-                <a href="https://drive.google.com/file/d/1N3d6ewQVkhnPtvx2jmv9vRm0rkZufqY6/view?usp=drive_link" target="_blank" class="video-tile">
-                    <img src="https://drive.google.com/thumbnail?id=1N3d6ewQVkhnPtvx2jmv9vRm0rkZufqY6&sz=w1000" class="video-thumb" alt="YAMUNA KHADAR VILLAGE">
-                    <div class="play-icon-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    </div>
-                    <div class="video-info">
-                        <h3>YAMUNA KHADAR VILLAGE</h3>
-                        <p>Post-Production & Editing</p>
-                    </div>
-                </a>
-
-                <a href="https://drive.google.com/file/d/15q_t8vwDLHsL25YmJlbZTVlepvr_re9f/view?usp=drive_link" target="_blank" class="video-tile">
-                    <img src="https://drive.google.com/thumbnail?id=15q_t8vwDLHsL25YmJlbZTVlepvr_re9f&sz=w1000" class="video-thumb" alt="YAMUNA GHAT">
-                    <div class="play-icon-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    </div>
-                    <div class="video-info">
-                        <h3>YAMUNA GHAT</h3>
-                        <p>Post-Production & Editing</p>
-                    </div>
-                </a>
-
+                <button class="tab-btn"
+                        id="edited-tab"
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="edited"
+                        tabindex="-1"
+                        data-tab="edited">Edited</button>
             </div>
-        </div>
 
-    </div>
+            <div id="shot"
+                 class="tab-content active"
+                 role="tabpanel"
+                 aria-labelledby="shot-tab">
+                <div class="video-grid">
 
-    <footer class="glass-panel">
-        <div class="copyright-text">
-            <p>&copy; 2026 Peeyush Howladar. All Rights Reserved.</p>
-        </div>
-    </footer>
+                <a href="https://drive.google.com/file/d/1ZBBAwSgdxPLoW9QN8vF12ecg0HBbzL2f/view?usp=drive_link" target="_blank" rel="noopener noreferrer"
+                   class="video-card">
+                    <div class="card-media">
+                        <img src="https://drive.google.com/thumbnail?id=1ZBBAwSgdxPLoW9QN8vF12ecg0HBbzL2f&amp;sz=w1000"
+                             alt="AN UNTOLD STORY - Leprosy"
+                             loading="lazy"
+                             class="video-thumb">
+                        <div class="media-shade"></div>
+                        <span class="card-number">01</span>
+                        <span class="play-button" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false">
+                                <path d="M8 5v14l11-7z"></path>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-role">Documentary Shoot</span>
+                        <h3>AN UNTOLD STORY - Leprosy</h3>
+                        <span class="watch-link">View project <span>↗</span></span>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/1mQXfm0NmV9m1j3akUsvnpj2YbQOmg83g/view?usp=drive_link" target="_blank" rel="noopener noreferrer"
+                   class="video-card">
+                    <div class="card-media">
+                        <img src="https://drive.google.com/thumbnail?id=1mQXfm0NmV9m1j3akUsvnpj2YbQOmg83g&amp;sz=w1000"
+                             alt="UMAR KE USS PAAR"
+                             loading="lazy"
+                             class="video-thumb">
+                        <div class="media-shade"></div>
+                        <span class="card-number">02</span>
+                        <span class="play-button" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false">
+                                <path d="M8 5v14l11-7z"></path>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-role">Documentary Shoot</span>
+                        <h3>UMAR KE USS PAAR</h3>
+                        <span class="watch-link">View project <span>↗</span></span>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/1N3d6ewQVkhnPtvx2jmv9vRm0rkZufqY6/view?usp=drive_link" target="_blank" rel="noopener noreferrer"
+                   class="video-card">
+                    <div class="card-media">
+                        <img src="https://drive.google.com/thumbnail?id=1N3d6ewQVkhnPtvx2jmv9vRm0rkZufqY6&amp;sz=w1000"
+                             alt="YAMUNA KHADAR VILLAGE"
+                             loading="lazy"
+                             class="video-thumb">
+                        <div class="media-shade"></div>
+                        <span class="card-number">03</span>
+                        <span class="play-button" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false">
+                                <path d="M8 5v14l11-7z"></path>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-role">Documentary Shoot</span>
+                        <h3>YAMUNA KHADAR VILLAGE</h3>
+                        <span class="watch-link">View project <span>↗</span></span>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/15q_t8vwDLHsL25YmJlbZTVlepvr_re9f/view?usp=drive_link" target="_blank" rel="noopener noreferrer"
+                   class="video-card">
+                    <div class="card-media">
+                        <img src="https://drive.google.com/thumbnail?id=15q_t8vwDLHsL25YmJlbZTVlepvr_re9f&amp;sz=w1000"
+                             alt="YAMUNA GHAT"
+                             loading="lazy"
+                             class="video-thumb">
+                        <div class="media-shade"></div>
+                        <span class="card-number">04</span>
+                        <span class="play-button" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false">
+                                <path d="M8 5v14l11-7z"></path>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-role">Documentary Shoot</span>
+                        <h3>YAMUNA GHAT</h3>
+                        <span class="watch-link">View project <span>↗</span></span>
+                    </div>
+                </a>
+                </div>
+            </div>
+
+            <div id="edited"
+                 class="tab-content"
+                 role="tabpanel"
+                 aria-labelledby="edited-tab"
+                 hidden>
+                <div class="video-grid">
+
+                <a href="https://drive.google.com/file/d/1ZBBAwSgdxPLoW9QN8vF12ecg0HBbzL2f/view?usp=drive_link" target="_blank" rel="noopener noreferrer"
+                   class="video-card">
+                    <div class="card-media">
+                        <img src="https://drive.google.com/thumbnail?id=1ZBBAwSgdxPLoW9QN8vF12ecg0HBbzL2f&amp;sz=w1000"
+                             alt="AN UNTOLD STORY - Leprosy"
+                             loading="lazy"
+                             class="video-thumb">
+                        <div class="media-shade"></div>
+                        <span class="card-number">01</span>
+                        <span class="play-button" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false">
+                                <path d="M8 5v14l11-7z"></path>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-role">Post-Production &amp; Editing</span>
+                        <h3>AN UNTOLD STORY - Leprosy</h3>
+                        <span class="watch-link">View project <span>↗</span></span>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/1mQXfm0NmV9m1j3akUsvnpj2YbQOmg83g/view?usp=drive_link" target="_blank" rel="noopener noreferrer"
+                   class="video-card">
+                    <div class="card-media">
+                        <img src="https://drive.google.com/thumbnail?id=1mQXfm0NmV9m1j3akUsvnpj2YbQOmg83g&amp;sz=w1000"
+                             alt="UMAR KE USS PAAR"
+                             loading="lazy"
+                             class="video-thumb">
+                        <div class="media-shade"></div>
+                        <span class="card-number">02</span>
+                        <span class="play-button" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false">
+                                <path d="M8 5v14l11-7z"></path>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-role">Post-Production &amp; Editing</span>
+                        <h3>UMAR KE USS PAAR</h3>
+                        <span class="watch-link">View project <span>↗</span></span>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/1N3d6ewQVkhnPtvx2jmv9vRm0rkZufqY6/view?usp=drive_link" target="_blank" rel="noopener noreferrer"
+                   class="video-card">
+                    <div class="card-media">
+                        <img src="https://drive.google.com/thumbnail?id=1N3d6ewQVkhnPtvx2jmv9vRm0rkZufqY6&amp;sz=w1000"
+                             alt="YAMUNA KHADAR VILLAGE"
+                             loading="lazy"
+                             class="video-thumb">
+                        <div class="media-shade"></div>
+                        <span class="card-number">03</span>
+                        <span class="play-button" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false">
+                                <path d="M8 5v14l11-7z"></path>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-role">Post-Production &amp; Editing</span>
+                        <h3>YAMUNA KHADAR VILLAGE</h3>
+                        <span class="watch-link">View project <span>↗</span></span>
+                    </div>
+                </a>
+
+                <a href="https://drive.google.com/file/d/15q_t8vwDLHsL25YmJlbZTVlepvr_re9f/view?usp=drive_link" target="_blank" rel="noopener noreferrer"
+                   class="video-card">
+                    <div class="card-media">
+                        <img src="https://drive.google.com/thumbnail?id=15q_t8vwDLHsL25YmJlbZTVlepvr_re9f&amp;sz=w1000"
+                             alt="YAMUNA GHAT"
+                             loading="lazy"
+                             class="video-thumb">
+                        <div class="media-shade"></div>
+                        <span class="card-number">04</span>
+                        <span class="play-button" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false">
+                                <path d="M8 5v14l11-7z"></path>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-role">Post-Production &amp; Editing</span>
+                        <h3>YAMUNA GHAT</h3>
+                        <span class="watch-link">View project <span>↗</span></span>
+                    </div>
+                </a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-main">
+                <div class="footer-copy">
+                    <strong>Peeyush Howladar</strong>
+                    <span>Filmmaker · Cinematographer · Visual Storyteller</span>
+                </div>
+                <a href="index.html" class="footer-back">← Return to Portfolio</a>
+            </div>
+
+            <div class="footer-bottom">
+                © 2026 Peeyush Howladar. All Rights Reserved.
+                <span class="gold-text">Designed with Passion 💛</span>
+            </div>
+        </footer>
+    </main>
 
     <script>
-        function openTab(tabId) {
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabPanels = document.querySelectorAll('.tab-content');
 
-            const buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(button => button.classList.remove('active'));
+        function activateTab(tabId, focusButton = false) {
+            tabButtons.forEach(button => {
+                const isActive = button.dataset.tab === tabId;
+                button.classList.toggle('active', isActive);
+                button.setAttribute('aria-selected', String(isActive));
+                button.tabIndex = isActive ? 0 : -1;
+                if (isActive && focusButton) button.focus();
+            });
 
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            tabPanels.forEach(panel => {
+                const isActive = panel.id === tabId;
+                panel.classList.toggle('active', isActive);
+                panel.hidden = !isActive;
+            });
         }
+
+        tabButtons.forEach((button, index) => {
+            button.addEventListener('click', () => activateTab(button.dataset.tab));
+
+            button.addEventListener('keydown', (event) => {
+                if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+
+                event.preventDefault();
+                const direction = event.key === 'ArrowRight' ? 1 : -1;
+                const nextIndex = (index + direction + tabButtons.length) % tabButtons.length;
+                activateTab(tabButtons[nextIndex].dataset.tab, true);
+            });
+        });
     </script>
 </body>
 </html>
-
-```
