@@ -406,29 +406,39 @@
             min-height: 480px;
             overflow: hidden;
             border-radius: var(--radius-xl);
+            cursor: pointer;
         }
 
-        .reel img {
+        .reel-poster,
+        .reel-video {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        .reel-poster {
             filter: brightness(0.34) contrast(1.12) saturate(0.8);
-            transition: transform 0.8s ease;
+            transition: opacity 0.65s ease, transform 1s ease;
         }
 
-        .reel:hover img {
-            transform: scale(1.035);
+        .reel-video {
+            opacity: 0;
+            pointer-events: none;
+            filter: brightness(0.45) contrast(1.08) saturate(0.88);
+            transform: scale(1.025);
+            transition: opacity 0.7s ease, transform 1.1s ease;
         }
 
-        .reel::after {
-            content: "";
+        .reel-overlay {
             position: absolute;
             inset: 0;
+            z-index: 1;
             background:
-                linear-gradient(90deg, rgba(13,13,13,0.94) 0%, rgba(13,13,13,0.70) 42%, rgba(13,13,13,0.18) 100%),
-                linear-gradient(0deg, rgba(13,13,13,0.60), transparent 60%);
+                linear-gradient(90deg, rgba(13,13,13,0.94) 0%, rgba(13,13,13,0.70) 42%, rgba(13,13,13,0.12) 100%),
+                linear-gradient(0deg, rgba(13,13,13,0.64), transparent 60%);
+            transition: background 0.7s ease;
         }
 
         .reel-content {
@@ -440,6 +450,7 @@
             justify-content: center;
             padding: clamp(35px, 6vw, 75px);
             max-width: 720px;
+            transition: opacity 0.55s ease, transform 0.75s cubic-bezier(0.2, 0.75, 0.2, 1);
         }
 
         .reel-content h2 {
@@ -456,12 +467,65 @@
             margin-bottom: 30px;
         }
 
-        .reel-note {
-            color: var(--muted);
-            font-size: 0.68rem;
-            letter-spacing: 1.5px;
+        .reel-hover-label {
+            position: absolute;
+            right: 32px;
+            bottom: 28px;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.45s ease 0.15s, transform 0.55s ease 0.15s;
+            pointer-events: none;
+        }
+
+        .reel-hover-label span {
+            color: var(--silver);
+            font-size: 0.62rem;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            margin-top: 18px;
+        }
+
+        .reel-hover-label strong {
+            margin-top: 3px;
+            color: var(--gold);
+            font-size: 0.78rem;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+        }
+
+        .reel:hover .reel-poster,
+        .reel.is-playing .reel-poster {
+            opacity: 0;
+            transform: scale(1.04);
+        }
+
+        .reel:hover .reel-video,
+        .reel.is-playing .reel-video {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .reel:hover .reel-overlay,
+        .reel.is-playing .reel-overlay {
+            background:
+                linear-gradient(90deg, rgba(13,13,13,0.42), rgba(13,13,13,0.08)),
+                linear-gradient(0deg, rgba(13,13,13,0.30), transparent 58%);
+        }
+
+        .reel:hover .reel-content,
+        .reel.is-playing .reel-content {
+            opacity: 0;
+            transform: translateX(-115%);
+            pointer-events: none;
+        }
+
+        .reel:hover .reel-hover-label,
+        .reel.is-playing .reel-hover-label {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* WORK */
@@ -848,10 +912,9 @@
                 padding: 32px;
             }
 
-            .reel::after {
-                background:
-                    linear-gradient(90deg, rgba(13,13,13,0.92), rgba(13,13,13,0.48)),
-                    linear-gradient(0deg, rgba(13,13,13,0.70), transparent 65%);
+            .reel-hover-label {
+                right: 22px;
+                bottom: 20px;
             }
 
             .work-grid {
@@ -972,20 +1035,38 @@
                 <p>A cinematic introduction to the kind of work I create from branded content to narrative filmmaking.</p>
             </div>
 
-            <div class="reel glass">
-                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1920&auto=format&fit=crop"
+            <div class="reel glass" id="showreelBox">
+                <img class="reel-poster"
+                     src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1920&auto=format&fit=crop"
                      alt="Cinematic filmmaking camera setup">
-                <div class="reel-content">
+
+                <video class="reel-video"
+                       id="showreelVideo"
+                       muted
+                       loop
+                       playsinline
+                       preload="metadata"
+                       aria-label="Peeyush Howladar showreel">
+                    <source src="showreel.mp4" type="video/mp4">
+                </video>
+
+                <div class="reel-overlay" aria-hidden="true"></div>
+
+                <div class="reel-content" id="showreelContent">
                     <div class="section-kicker">Showreel 2026</div>
                     <h2>Stories told<br><span class="gold">through images.</span></h2>
                     <p>
                         A selection of cinematography, production and editing work.
-                        Explore the complete portfolio below.
+                        Hover over this section to preview the showreel.
                     </p>
                     <div>
-                        <a href="#work" class="btn btn-primary">Explore Selected Work →</a>
+                        <span class="btn btn-primary">Hover to Play →</span>
                     </div>
-                    <div class="reel-note">Showreel video link can be connected here when available.</div>
+                </div>
+
+                <div class="reel-hover-label" aria-hidden="true">
+                    <span>SHOWREEL 2026</span>
+                    <strong>Playing Preview</strong>
                 </div>
             </div>
         </section>
@@ -1137,6 +1218,32 @@
                 menuToggle.setAttribute('aria-label', 'Open navigation');
             });
         });
+
+        // Showreel hover-to-play preview
+        const showreelBox = document.getElementById('showreelBox');
+        const showreelVideo = document.getElementById('showreelVideo');
+
+        if (showreelBox && showreelVideo) {
+            const playShowreel = () => {
+                showreelBox.classList.add('is-playing');
+                showreelVideo.play().catch(() => {});
+            };
+
+            const stopShowreel = () => {
+                showreelBox.classList.remove('is-playing');
+                showreelVideo.pause();
+                showreelVideo.currentTime = 0;
+            };
+
+            showreelBox.addEventListener('mouseenter', playShowreel);
+            showreelBox.addEventListener('mouseleave', stopShowreel);
+
+            showreelBox.addEventListener('touchstart', () => {
+                if (!showreelBox.classList.contains('is-playing')) {
+                    playShowreel();
+                }
+            }, { passive: true });
+        }
 
         // Reveal-on-scroll animation
         const revealObserver = new IntersectionObserver((entries, observer) => {
