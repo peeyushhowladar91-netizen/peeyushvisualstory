@@ -496,6 +496,29 @@
             text-transform: uppercase;
         }
 
+        .reel-youtube-link {
+            display: inline-flex;
+            margin-top: 10px;
+            padding: 8px 13px;
+            border: 1px solid rgba(212,175,55,0.42);
+            border-radius: 999px;
+            color: var(--text-main);
+            background: rgba(13,13,13,0.48);
+            text-decoration: none;
+            font-size: 0.62rem;
+            letter-spacing: 1.1px;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+            pointer-events: auto;
+        }
+
+        .reel-youtube-link:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+            background: rgba(212,175,55,0.10);
+            transform: translateY(-2px);
+        }
+
         .reel:hover .reel-poster,
         .reel.is-playing .reel-poster {
             opacity: 0;
@@ -510,9 +533,7 @@
 
         .reel:hover .reel-overlay,
         .reel.is-playing .reel-overlay {
-            background:
-                linear-gradient(90deg, rgba(13,13,13,0.42), rgba(13,13,13,0.08)),
-                linear-gradient(0deg, rgba(13,13,13,0.30), transparent 58%);
+            background: transparent;
         }
 
         .reel:hover .reel-content,
@@ -1042,12 +1063,11 @@
 
                 <video class="reel-video"
                        id="showreelVideo"
-                       muted
                        loop
                        playsinline
                        preload="metadata"
                        aria-label="Peeyush Howladar showreel">
-                    <source src="showreel.mp4" type="video/mp4">
+                    <source src="Showreel_1.mp4" type="video/mp4">
                 </video>
 
                 <div class="reel-overlay" aria-hidden="true"></div>
@@ -1064,9 +1084,16 @@
                     </div>
                 </div>
 
-                <div class="reel-hover-label" aria-hidden="true">
+                <div class="reel-hover-label">
                     <span>SHOWREEL 2026</span>
                     <strong>Playing Preview</strong>
+                    <a class="reel-youtube-link"
+                       href="https://youtu.be/N579mWjyqtQ"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Watch the Showreel in high quality on YouTube">
+                        Watch in High Quality ↗
+                    </a>
                 </div>
             </div>
         </section>
@@ -1225,14 +1252,23 @@
 
         if (showreelBox && showreelVideo) {
             const playShowreel = () => {
-                showreelBox.classList.add('is-playing');
-                showreelVideo.play().catch(() => {});
+                showreelVideo.muted = false;
+                showreelVideo.volume = 1;
+                showreelVideo.play().then(() => {
+                    showreelBox.classList.add('is-playing');
+                }).catch(() => {
+                    // Browsers may block unmuted autoplay until the user has interacted
+                    // with the page. The video remains ready to play after interaction.
+                    showreelBox.classList.add('is-playing');
+                });
             };
 
             const stopShowreel = () => {
                 showreelBox.classList.remove('is-playing');
                 showreelVideo.pause();
                 showreelVideo.currentTime = 0;
+                showreelVideo.muted = false;
+                showreelVideo.volume = 1;
             };
 
             showreelBox.addEventListener('mouseenter', playShowreel);
