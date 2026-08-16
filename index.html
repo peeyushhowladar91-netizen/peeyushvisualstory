@@ -647,133 +647,330 @@
             transform: translateX(0);
         }
 
-
         /* CV */
-        .cv-header {
+        .cv-section {
             display: grid;
-            grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-            gap: 40px;
-            align-items: end;
-            margin-bottom: 28px;
+            grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+            gap: 22px;
+            align-items: stretch;
         }
 
-        .cv-header h2 {
-            max-width: 760px;
-            font-size: clamp(2.4rem, 5vw, 4.8rem);
+        .cv-panel {
+            position: relative;
+            overflow: hidden;
+            padding: clamp(30px, 5vw, 55px);
+            border-radius: var(--radius-xl);
+        }
+
+        .cv-panel::before {
+            content: "CV";
+            position: absolute;
+            right: -20px;
+            top: -55px;
+            color: rgba(212,175,55,0.045);
+            font-size: clamp(9rem, 18vw, 16rem);
+            font-weight: 800;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .cv-panel h2 {
+            position: relative;
+            max-width: 700px;
+            font-size: clamp(2.3rem, 5vw, 4.6rem);
             line-height: 0.98;
             letter-spacing: -0.05em;
         }
 
-        .cv-header-copy {
-            max-width: 560px;
-            justify-self: end;
-        }
-
-        .cv-header-copy p {
-            margin-bottom: 22px;
+        .cv-panel p {
+            position: relative;
+            max-width: 620px;
+            margin-top: 20px;
             color: var(--silver);
             line-height: 1.8;
         }
 
-        .cv-viewer {
-            overflow: hidden;
+        .cv-actions {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .cv-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 25px;
+            padding: clamp(30px, 5vw, 45px);
             border-radius: var(--radius-xl);
         }
 
-        .cv-viewer-top {
-            min-height: 78px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            padding: 18px 24px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.025);
-        }
-
-        .cv-viewer-top > div {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .cv-viewer-kicker {
+        .cv-side-label {
             color: var(--muted);
-            font-size: 0.64rem;
+            font-size: 0.68rem;
             letter-spacing: 2.5px;
             text-transform: uppercase;
         }
 
-        .cv-viewer-top strong {
-            color: var(--white);
-            font-size: 1rem;
+        .cv-side strong {
+            display: block;
+            margin-top: 8px;
+            color: var(--gold);
+            font-size: 1.05rem;
+            font-weight: 600;
         }
 
-        .cv-download-link {
+        .cv-note {
+            color: var(--silver);
+            font-size: 0.82rem;
+            line-height: 1.7;
+        }
+
+        /* CV DOCUMENT */
+        .cv-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 28px;
+        }
+
+        .cv-heading h2 {
+            font-size: clamp(2.6rem, 5vw, 5rem);
+            line-height: 0.98;
+            letter-spacing: -0.05em;
+            margin-top: 8px;
+        }
+
+        .cv-heading-copy {
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .cv-heading-copy p {
+            color: var(--silver);
+            line-height: 1.75;
+        }
+
+        .cv-document {
+            overflow: hidden;
+            border-radius: var(--radius-xl);
+        }
+
+        .cv-document-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            padding: clamp(28px, 4vw, 46px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .cv-name {
+            font-size: clamp(1.8rem, 3.5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.045em;
+        }
+
+        .cv-role {
+            margin-top: 8px;
+            color: var(--gold);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+        }
+
+        .cv-contact {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+            color: var(--silver);
+            font-size: 0.78rem;
+            text-align: right;
+        }
+
+        .cv-contact a:hover {
+            color: var(--gold);
+        }
+
+        .cv-objective {
+            padding: 28px clamp(28px, 4vw, 46px);
+            background: rgba(212, 175, 55, 0.035);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .cv-objective p {
+            max-width: 1100px;
+            margin-top: 10px;
+            color: var(--silver);
+            line-height: 1.8;
+        }
+
+        .cv-label {
             color: var(--gold);
             font-size: 0.68rem;
             font-weight: 700;
-            letter-spacing: 1.8px;
+            letter-spacing: 2.4px;
             text-transform: uppercase;
-            white-space: nowrap;
-            transition: color 0.25s ease, transform 0.25s ease;
         }
 
-        .cv-download-link:hover {
-            color: var(--white);
-            transform: translateY(-1px);
+        .cv-layout {
+            display: grid;
+            grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1.5fr);
         }
 
-        .cv-pdf-wrap {
-            width: 100%;
-            height: min(1000px, 78vh);
-            min-height: 650px;
-            background: #171717;
+        .cv-column {
+            padding: clamp(28px, 4vw, 44px);
         }
 
-        .cv-pdf {
+        .cv-left {
+            border-right: 1px solid var(--line);
+        }
+
+        .cv-block + .cv-block {
+            margin-top: 38px;
+        }
+
+        .cv-item {
+            margin-top: 20px;
+        }
+
+        .cv-item strong,
+        .cv-job strong,
+        .cv-project strong,
+        .reference-grid strong {
             display: block;
-            width: 100%;
-            height: 100%;
-            border: 0;
-            background: #171717;
+            color: var(--white);
+            font-weight: 650;
         }
 
-        .cv-highlights {
+        .cv-item span {
+            display: block;
+            margin-top: 5px;
+            color: var(--silver);
+            font-size: 0.78rem;
+            line-height: 1.55;
+        }
+
+        .cv-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .cv-tags span {
+            padding: 7px 10px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: var(--silver);
+            font-size: 0.72rem;
+        }
+
+        .cv-list {
+            display: grid;
+            gap: 8px;
+            margin-top: 15px;
+            color: var(--silver);
+            font-size: 0.8rem;
+        }
+
+        .cv-job {
+            margin-top: 26px;
+        }
+
+        .cv-job + .cv-job {
+            padding-top: 26px;
+            border-top: 1px solid var(--line);
+        }
+
+        .cv-job-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .cv-job-head span {
+            flex: 0 0 auto;
+            color: var(--muted);
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+
+        .cv-company {
+            margin-top: 5px;
+            color: var(--gold);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+        }
+
+        .cv-job ul {
+            margin: 12px 0 0 17px;
+            color: var(--silver);
+            font-size: 0.78rem;
+            line-height: 1.65;
+        }
+
+        .cv-project {
+            margin-top: 20px;
+        }
+
+        .cv-project p {
+            margin-top: 6px;
+            color: var(--silver);
+            font-size: 0.78rem;
+            line-height: 1.65;
+        }
+
+        .cv-simple-list {
+            margin: 15px 0 0 17px;
+            color: var(--silver);
+            font-size: 0.8rem;
+            line-height: 1.7;
+        }
+
+        .cv-references {
+            padding: 28px clamp(28px, 4vw, 46px);
+            border-top: 1px solid var(--line);
+        }
+
+        .reference-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
+            gap: 25px;
             margin-top: 18px;
         }
 
-        .cv-highlight {
-            min-height: 160px;
-            padding: 26px;
-            border-radius: var(--radius-lg);
+        .reference-grid div {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            color: var(--silver);
+            font-size: 0.72rem;
+            line-height: 1.5;
         }
 
-        .cv-highlight-label {
-            display: block;
-            margin-bottom: 12px;
-            color: var(--gold);
-            font-size: 0.63rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .reference-grid strong {
+            font-size: 0.82rem;
         }
 
-        .cv-highlight strong {
-            display: block;
-            color: var(--white);
-            font-size: 1rem;
-            line-height: 1.45;
-        }
-
-        .cv-highlight p {
-            margin-top: 9px;
-            color: var(--muted);
-            font-size: 0.8rem;
-            line-height: 1.65;
+        .cv-download-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 22px clamp(28px, 4vw, 46px);
+            background: rgba(212, 175, 55, 0.045);
+            border-top: 1px solid var(--line);
+            color: var(--silver);
+            font-size: 0.78rem;
         }
 
         /* ABOUT / SERVICES */
@@ -976,23 +1173,39 @@
 
             .work-grid,
             .about-grid,
-            .cv-header,
-            .cv-highlights {
+            .cv-section,
+            .cv-layout {
                 grid-template-columns: 1fr;
             }
 
-            .cv-header-copy {
-                justify-self: start;
-            }
-
-            .cv-viewer-top {
+            .cv-heading,
+            .cv-document-header,
+            .cv-download-bar {
                 align-items: flex-start;
                 flex-direction: column;
             }
 
-            .cv-pdf-wrap {
-                height: 75vh;
-                min-height: 520px;
+            .cv-contact {
+                align-items: flex-start;
+                text-align: left;
+            }
+
+            .cv-left {
+                border-right: 0;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .reference-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cv-job-head {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .cv-job-head span {
+                white-space: normal;
             }
 
             .work-card {
@@ -1299,62 +1512,213 @@
             </div>
         </section>
 
-
         <!-- CV -->
         <section class="section reveal" id="cv">
-            <div class="cv-header">
+            <div class="cv-heading">
                 <div>
                     <div class="section-kicker">My CV</div>
-                    <h2>Experience, skills<br><span class="gold">and the work behind it.</span></h2>
+                    <h2>Peeyush <span class="gold">Howladar.</span></h2>
                 </div>
-                <div class="cv-header-copy">
-                    <p>
-                        A detailed look at my filmmaking, cinematography, videography,
-                        editing and creative production experience.
-                    </p>
-                    <a href="CV.pdf" download="Peeyush-Howladar-CV.pdf" class="btn btn-primary">
-                        Download My CV ↓
-                    </a>
+                <div class="cv-heading-copy">
+                    <p>A concise view of my professional experience, filmmaking practice, technical skills and education.</p>
+                    <a href="CV.pdf" download class="btn btn-primary">Download My CV ↓</a>
                 </div>
             </div>
 
-            <div class="cv-viewer glass">
-                <div class="cv-viewer-top">
+            <div class="cv-document glass">
+                <header class="cv-document-header">
                     <div>
-                        <span class="cv-viewer-kicker">Curriculum Vitae</span>
-                        <strong>Peeyush Howladar</strong>
+                        <div class="cv-name">PEEYUSH HOWLADAR</div>
+                        <div class="cv-role">Filmmaker · Cinematographer · Video Editor · Visual Storyteller</div>
                     </div>
-                    <a href="CV.pdf" download="Peeyush-Howladar-CV.pdf" class="cv-download-link">
-                        Download for Print ↓
-                    </a>
+                    <div class="cv-contact">
+                        <a href="tel:+918368550663">+91 83685 50663</a>
+                        <a href="mailto:peeyushhowladar91@gmail.com">peeyushhowladar91@gmail.com</a>
+                        <span>Ghaziabad, Uttar Pradesh</span>
+                    </div>
+                </header>
+
+                <div class="cv-objective">
+                    <div class="cv-label">Career Objective</div>
+                    <p>
+                        I am highly skilled video production enthusiast with 4+ years of experience in filmmaking,
+                        event coverage and content creation. Skilled in advanced camera work, cinematography,
+                        professional colour grading, precise editing and sound design, with a collaborative,
+                        detail-oriented approach to high-impact visual content.
+                    </p>
                 </div>
 
-                <div class="cv-pdf-wrap">
-                    <iframe
-                        class="cv-pdf"
-                        src="CV.pdf#toolbar=1&navpanes=0&scrollbar=1"
-                        title="Peeyush Howladar CV">
-                    </iframe>
-                </div>
-            </div>
+                <div class="cv-layout">
+                    <aside class="cv-column cv-left">
+                        <div class="cv-block">
+                            <div class="cv-label">Education</div>
+                            <div class="cv-item">
+                                <strong>Masters in Journalism and Mass Communication</strong>
+                                <span>Asian Academy of Film and Television, Noida, UP · 2024–2026</span>
+                            </div>
+                            <div class="cv-item">
+                                <strong>Film Making</strong>
+                                <span>Institute of Moving Images, ITO, New Delhi · 2024</span>
+                            </div>
+                            <div class="cv-item">
+                                <strong>Bachelors of Commerce</strong>
+                                <span>Swami Shraddhanand College, Alipur, New Delhi · 2024</span>
+                            </div>
+                        </div>
 
-            <div class="cv-highlights">
-                <div class="cv-highlight glass">
-                    <span class="cv-highlight-label">Current Role</span>
-                    <strong>Video Editor, Videographer &amp; Graphic Designer</strong>
-                    <p>InfluencerAct / Influencer Marketing Agency · New Delhi · 27/11/2025–Current</p>
+                        <div class="cv-block">
+                            <div class="cv-label">Professional Skills</div>
+                            <div class="cv-tags">
+                                <span>Photography</span><span>Videography</span><span>Editing</span><span>Graphic Designing</span>
+                            </div>
+                        </div>
+
+                        <div class="cv-block">
+                            <div class="cv-label">Software</div>
+                            <div class="cv-list">
+                                <span>Adobe Photoshop</span>
+                                <span>Adobe Illustrator</span>
+                                <span>Adobe Premiere Pro</span>
+                                <span>Adobe After Effects</span>
+                            </div>
+                        </div>
+
+                        <div class="cv-block">
+                            <div class="cv-label">Camera Experience</div>
+                            <div class="cv-list">
+                                <span>Canon 80D</span>
+                                <span>Canon M50 Mark 2</span>
+                                <span>Sony M3</span>
+                                <span>Sony FX30</span>
+                                <span>Sony M4</span>
+                                <span>Sony ZVE10</span>
+                                <span>Panasonic 4K</span>
+                            </div>
+                        </div>
+
+                        <div class="cv-block">
+                            <div class="cv-label">Soft Skills</div>
+                            <div class="cv-tags">
+                                <span>Management</span><span>Problem Solving</span><span>Team Work</span><span>Adaptability</span>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <div class="cv-column cv-right">
+                        <div class="cv-block">
+                            <div class="cv-label">Work Experience</div>
+
+                            <article class="cv-job">
+                                <div class="cv-job-head">
+                                    <strong>Video Editor, Videographer &amp; Graphic Designer</strong>
+                                    <span>27/11/2025 – Current</span>
+                                </div>
+                                <div class="cv-company">InfluencerAct · New Delhi</div>
+                                <ul>
+                                    <li>Produced and shot informative reels and documented office events.</li>
+                                    <li>Edited short-form and documentary-style videos for storytelling and audience engagement.</li>
+                                    <li>Integrated Generative AI tools into daily workflows to improve content creation efficiency and creativity.</li>
+                                    <li>Created AI-generated Instagram posts and thumbnails to enhance engagement.</li>
+                                </ul>
+                            </article>
+
+                            <article class="cv-job">
+                                <div class="cv-job-head">
+                                    <strong>Video Editor, Videographer &amp; Graphic Designer</strong>
+                                    <span>01/06/2025 – 30/09/2025</span>
+                                </div>
+                                <div class="cv-company">NewG India · Media Channel · New Delhi</div>
+                                <ul>
+                                    <li>Worked on podcast production, multi-camera setups, lighting and complete editing.</li>
+                                    <li>Created podcast trailers, reels and full episodes.</li>
+                                    <li>Designed thumbnails and social media content for Instagram and Twitter.</li>
+                                    <li>Managed daily reel shoots and edits; operated a teleprompter.</li>
+                                </ul>
+                            </article>
+
+                            <article class="cv-job">
+                                <div class="cv-job-head">
+                                    <strong>Candid Photographer, Cinematographer &amp; Video Editor</strong>
+                                    <span>26/10/2024 – 01/02/2025</span>
+                                </div>
+                                <div class="cv-company">Deepak Creator Production</div>
+                                <ul>
+                                    <li>Covered 50+ events with professional videography and photography within deadlines.</li>
+                                    <li>Developed agility in capturing key moments with precise lighting and colour accuracy.</li>
+                                </ul>
+                            </article>
+
+                            <article class="cv-job">
+                                <div class="cv-job-head">
+                                    <strong>Videographer &amp; Video Editor</strong>
+                                    <span>20/07/2023 – 26/06/2024</span>
+                                </div>
+                                <div class="cv-company">Kartab · Advertisement Agency</div>
+                                <ul>
+                                    <li>Shot and edited podcast videos, brand videos and social media reels.</li>
+                                    <li>Managed complete production from concept and filming through editing and final delivery.</li>
+                                </ul>
+                            </article>
+
+                            <article class="cv-job">
+                                <div class="cv-job-head">
+                                    <strong>Videographer &amp; Photographer</strong>
+                                    <span>01/10/2023 – 02/05/2024</span>
+                                </div>
+                                <div class="cv-company">Indian Political Solutions · New Delhi</div>
+                                <ul>
+                                    <li>Captured professional video and photography across field, indoor and outdoor locations.</li>
+                                    <li>Delivered clear, visually engaging content tailored to client needs.</li>
+                                </ul>
+                            </article>
+                        </div>
+
+                        <div class="cv-block">
+                            <div class="cv-label">Selected Film Projects</div>
+
+                            <article class="cv-project">
+                                <strong>HAPPY HEART FILMS · Short Film Cinematographer</strong>
+                                <p>Shot and edited <em>Surname Kya Hai?</em> and <em>Raat Ajnabi</em>. Worked in guerrilla-style environments and used natural light to build a realistic, cohesive tone.</p>
+                            </article>
+
+                            <article class="cv-project">
+                                <strong>RANDOM ENTERTAINMENT · Short Film Cinematographer</strong>
+                                <p>Shot and edited <em>Kal Phir Milte Hain...</em> and <em>We are FLATMATES</em>, adapting quickly to uncontrolled environments and run-and-gun production.</p>
+                            </article>
+
+                            <article class="cv-project">
+                                <strong>THE CREATORS STORIES · Cinematographer, Visual Storyteller &amp; Editor</strong>
+                                <p>Shot and edited <em>The Revisit</em>, applying lighting, framing, composition, sound design and post-production skills.</p>
+                            </article>
+
+                            <article class="cv-project">
+                                <strong>ROOTSGONEBEYOND · Short Film Editor</strong>
+                                <p>Edited <em>The Family Guy</em>, <em>Dating a Podcaster</em> and <em>The Mysterious Box</em>, with experience in sound design, multi-cam editing and managing diverse camera angles.</p>
+                            </article>
+                        </div>
+
+                        <div class="cv-block">
+                            <div class="cv-label">Volunteering</div>
+                            <ul class="cv-simple-list">
+                                <li>Edited interview and podcast videos for AAFT 24x7.</li>
+                                <li>Completed a 1-year tenure as Coordinator in LENSATION, Photography and Film Making Society of Swami Shraddhanand College.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="cv-highlight glass">
-                    <span class="cv-highlight-label">Core Skills</span>
-                    <strong>Photography · Videography · Editing · Graphic Designing</strong>
-                    <p>Professional software includes Photoshop, Illustrator, Premiere Pro and After Effects.</p>
-                </div>
+                <footer class="cv-references">
+                    <div class="cv-label">Professional References</div>
+                    <div class="reference-grid">
+                        <div><strong>Pinki Chaturvedi</strong><span>Placement Manager, AAFT</span><span>+91 85869 70287</span><span>pinki.chaturvedi@asms.edu.in</span></div>
+                        <div><strong>Navneet Sharan</strong><span>Group Editor, NewG India</span><span>+91 98736 33062</span><span>navneetsharan@gmail.com</span></div>
+                        <div><strong>Gaurav Arora</strong><span>Growth &amp; Operations Manager, InfluencerAct</span><span>+91 98999 55970</span><span>gaurav@influenceract.com</span></div>
+                    </div>
+                </footer>
 
-                <div class="cv-highlight glass">
-                    <span class="cv-highlight-label">Education</span>
-                    <strong>Masters in Journalism and Mass Communication</strong>
-                    <p>Asian Academy of Film and Television at Noida, UP · 2024–2026</p>
+                <div class="cv-download-bar">
+                    <span>Want a printable copy of my complete CV?</span>
+                    <a href="CV.pdf" download class="btn btn-primary">Download My CV ↓</a>
                 </div>
             </div>
         </section>
