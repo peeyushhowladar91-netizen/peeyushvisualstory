@@ -9,6 +9,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="Showreel_Hover.mp4" as="video" type="video/mp4">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
@@ -470,14 +471,15 @@
 
         .reel-hover-label {
             position: absolute;
-            right: 32px;
-            bottom: 28px;
+            left: 50%;
+            bottom: 24px;
             z-index: 3;
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
+            align-items: center;
+            text-align: center;
             opacity: 0;
-            transform: translateY(12px);
+            transform: translate(-50%, 12px);
             transition: opacity 0.45s ease 0.15s, transform 0.55s ease 0.15s;
             pointer-events: none;
         }
@@ -547,7 +549,7 @@
         .reel:hover .reel-hover-label,
         .reel.is-playing .reel-hover-label {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate(-50%, 0);
         }
 
         /* WORK */
@@ -935,8 +937,9 @@
             }
 
             .reel-hover-label {
-                right: 22px;
+                left: 50%;
                 bottom: 20px;
+                transform: translate(-50%, 12px);
             }
 
             .work-grid {
@@ -1059,16 +1062,19 @@
 
             <div class="reel glass" id="showreelBox">
                 <img class="reel-poster"
-                     src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1920&auto=format&fit=crop"
-                     alt="Cinematic filmmaking camera setup">
+                     src="showreel_thumb.png"
+                     alt="Peeyush Howladar Showreel">
 
                 <video class="reel-video"
                        id="showreelVideo"
+                       muted
                        loop
                        playsinline
-                       preload="metadata"
+                       preload="auto"
+                       fetchpriority="high"
+                       poster="showreel_thumb.png"
                        aria-label="Peeyush Howladar showreel">
-                    <source src="Showreel_1.mp4" type="video/mp4">
+                    <source src="Showreel_Hover.mp4" type="video/mp4">
                 </video>
 
                 <div class="reel-overlay" aria-hidden="true"></div>
@@ -1252,32 +1258,80 @@
         const showreelVideo = document.getElementById('showreelVideo');
 
         if (showreelBox && showreelVideo) {
-            const playShowreel = () => {
-                showreelVideo.muted = false;
-                showreelVideo.volume = 1;
-                showreelVideo.play().then(() => {
+            let soundUnlocked = false;
+
+            // Start buffering immediately. The lightweight preview is only ~2.7 MB.
+            const warmUpShowreel = () => {
+                try {
+                    showreelVideo.preload = 'auto';
+                    showreelVideo.load();
+                } catch (error) {
+                    console.warn('Showreel preload could not be started.', error);
+                }
+            };
+
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(warmUpShowreel, { timeout: 1000 });
+            } else {
+                setTimeout(warmUpShowreel, 250);
+            }
+
+            // A real click/tap is required by browsers before sound can be
+            // enabled. Once the visitor interacts, later hover playback can
+            // use sound where the browser permits it.
+            const unlockSound = () => {
+                soundUnlocked = true;
+            };
+
+            window.addEventListener('pointerdown', unlockSound, { once: true, passive: true });
+            window.addEventListener('keydown', unlockSound, { once: true });
+
+            const playShowreel = async () => {
+                try {
+                    // Hover playback must begin muted for reliable, instant
+                    // browser autoplay. Sound is enabled only after a real
+                    // user gesture has unlocked it.
+                    showreelVideo.muted = !soundUnlocked;
+                    showreelVideo.volume = 1;
+                    showreelVideo.currentTime = 0;
+
+                    await showreelVideo.play();
+
                     showreelBox.classList.add('is-playing');
-                }).catch(() => {
-                    // Browsers may block unmuted autoplay until the user has interacted
-                    // with the page. The video remains ready to play after interaction.
-                    showreelBox.classList.add('is-playing');
-                });
+
+                    // If sound has been unlocked, keep it on.
+                    if (soundUnlocked) {
+                        showreelVideo.muted = false;
+                    }
+                } catch (error) {
+                    // Retry muted: visual hover playback should still work
+                    // even when the browser rejects audio playback.
+                    try {
+                        showreelVideo.muted = true;
+                        await showreelVideo.play();
+                        showreelBox.classList.add('is-playing');
+                    } catch (retryError) {
+                        console.warn('Showreel playback could not start.', retryError);
+                    }
+                }
             };
 
             const stopShowreel = () => {
                 showreelBox.classList.remove('is-playing');
                 showreelVideo.pause();
                 showreelVideo.currentTime = 0;
-                showreelVideo.muted = false;
-                showreelVideo.volume = 1;
             };
 
             showreelBox.addEventListener('mouseenter', playShowreel);
             showreelBox.addEventListener('mouseleave', stopShowreel);
 
-            showreelBox.addEventListener('touchstart', () => {
-                if (!showreelBox.classList.contains('is-playing')) {
-                    playShowreel();
+            // On touch devices, a tap is a real user gesture, so sound can
+            // be enabled for the preview.
+            showreelBox.addEventListener('pointerdown', async (event) => {
+                if (event.pointerType !== 'mouse') {
+                    soundUnlocked = true;
+                    showreelVideo.muted = false;
+                    await playShowreel();
                 }
             }, { passive: true });
         }
